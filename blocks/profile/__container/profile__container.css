@@ -1,0 +1,5 @@
+.profile__container {
+  width: 880px;
+  display: grid;
+  grid-template-columns: 150px calc(100% - 300px) 150px;
+}

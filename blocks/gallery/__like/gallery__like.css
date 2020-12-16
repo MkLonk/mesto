@@ -1,0 +1,10 @@
+.gallery__like {
+  width: 21px;
+  height: 18px;
+  align-self: center;
+  
+  background-image: url(../../../images/gallery__like.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
