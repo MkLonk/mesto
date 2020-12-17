@@ -1,7 +1,7 @@
 .gallery__item {
   margin: 0;
-  width: 282px;
-  height: 361px;
+  max-width: 282px;
+  height: 362px;
   background-color: #fff;
   border-radius: 10px;
 }

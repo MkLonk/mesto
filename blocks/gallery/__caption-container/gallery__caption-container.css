@@ -1,6 +1,8 @@
 .gallery__caption-container {
+  /* height: 80px; */
   display: flex;
   justify-content: space-between;
   padding: 25px 15px 0 21px;
+  box-sizing: border-box;
   /* border: solid 1px red; */
 }
