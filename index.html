@@ -24,14 +24,12 @@
 
         <div class="profile__container">
           <div class="profile__avatar"></div>
-          <div class="profile__info">
-            <div class="profile__title-container">
-              <h1 class="profile__title">Жак-Ив Кусто Жак-Ив Кусто Жак-Ив Кусто Жак-Ив Кусто</h1>
-              <div class="profile__edit-button"></div>
-            </div>
-            <p class="profile__subtitle">Исследователь океана</p>
+          <div class="profile__user-container">
+            <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+            <div class="profile__button-edit"></div>
           </div>
-          <div class="profile__add-button"></div>
+          <div class="profile__button-add"></div>
+          <p class="profile__user-job">Исследователь океана</p>
         </div>
 
       </section>
@@ -40,11 +38,11 @@
         <form class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
           <div class="popup__input-fields">
-            <input class="popup__text-input" type="text" name="firstname" placeholder="Иванов Иван" required>
-            <input class="popup__text-input" type="text" name="profession" placeholder="Иванов Иван" required>
+            <input class="popup__text-input user-input" type="text" name="firstname" placeholder="Иванов Иван" required>
+            <input class="popup__text-input job-input" type="text" name="profession" placeholder="Иванов Иван" required>
           </div>
           <input class="popup__button-save" type="submit" value="Сохранить">
-          <input class="popup__button-close" type="reset">
+          <div class="popup__button-close"></div>
         </form>
       </section>
 
@@ -55,7 +53,7 @@
             <figure class="gallery__item">
               <img class="gallery__image" src="./images/gallery__кarachaevsk.jpg">
               <figcaption class="gallery__caption-container">
-                <p class="gallery__caption">Карачаевск</p>
+                <p class="gallery__caption">Карачаевск Карачаевск Карачаевск</p>
                 <div class="gallery__like"></div>
               </figcaption>
             </figure>
@@ -126,7 +124,7 @@
     </footer>
 
   </div>
-
+  <script src="script.js"></script>
 </body>
 
 </html>

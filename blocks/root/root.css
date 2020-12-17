@@ -1,8 +1,9 @@
 /* Отладка */
 
-header, footer, div, main, section, .footer, h1, h2, h3, p, a, ul, li, article, nav, form, input {
+/* header, footer, div, main, section, .footer, h1, h2, h3, p, a, ul, li, article, nav, form, input {
   border: red solid 1px;
 }
+ */
 
 .root {
   max-width: 1280px;
@@ -10,7 +11,6 @@ header, footer, div, main, section, .footer, h1, h2, h3, p, a, ul, li, article, 
   padding: 0 calc((100% - 1280px)/2);
   background-color: #000;
   color: #fff;
-  
   font-family: 'Inter', 'Arial', sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;

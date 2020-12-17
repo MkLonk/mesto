@@ -1,0 +1,17 @@
+.profile__user-container {
+  display: grid;
+  grid-template-columns: fit-content(530px) 34px;
+  column-gap: 19px;
+  margin-top: 22px;
+}
+
+@media screen and (max-width: 700px) {
+  .profile__user-container {
+    height: 100%;
+    grid-row: 2;
+    margin: 0;
+    justify-self: center;
+    column-gap: 10px;
+    grid-template-columns: fit-content(530px) 18px;
+  }
+}
