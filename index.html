@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./pages/index.css">
 
-  <title>Document</title>
+  <title>Место</title>
 </head>
 
 <body>
@@ -21,7 +21,6 @@
     <main class="content">
 
       <section class="profile">
-
         <div class="profile__container">
           <div class="profile__avatar"></div>
           <div class="profile__user-container">
@@ -31,29 +30,29 @@
           <div class="profile__button-add"></div>
           <p class="profile__user-job">Исследователь океана</p>
         </div>
-
       </section>
 
       <section class="popup">
         <form class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
           <div class="popup__input-fields">
-            <input class="popup__text-input user-input" type="text" name="firstname" placeholder="Иванов Иван" required>
-            <input class="popup__text-input job-input" type="text" name="profession" placeholder="Иванов Иван" required>
+            <input class="popup__text-input user-name-input" type="text" name="userNameInput" placeholder="Иванов Иван"
+              required>
+            <input class="popup__text-input user-job-input" type="text" name="userJobInput"
+              placeholder="Шахтер 6 разряда" required>
           </div>
-          <input class="popup__button-save" type="submit" value="Сохранить">
+          <button class="popup__button-save" type="submit" value="Сохранить">Сохранить</button>
           <div class="popup__button-close"></div>
         </form>
       </section>
 
       <section class="gallery">
         <ul class="gallery__photo-grid">
-
           <li>
             <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__кarachaevsk.jpg">
+              <img class="gallery__image" src="./images/gallery__baikal.jpg" alt="Зимний Байкал">
               <figcaption class="gallery__caption-container">
-                <p class="gallery__caption">Карачаевск Карачаевск Карачаевск</p>
+                <h2 class="gallery__caption">Зимний Байкал</h2>
                 <div class="gallery__like"></div>
               </figcaption>
             </figure>
@@ -61,9 +60,9 @@
 
           <li>
             <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__кarachaevsk.jpg">
+              <img class="gallery__image" src="./images/gallery__kizhi.jpg" alt="Кижи">
               <figcaption class="gallery__caption-container">
-                <p class="gallery__caption">Карачаевск</p>
+                <h2 class="gallery__caption">Кижи</h2>
                 <div class="gallery__like"></div>
               </figcaption>
             </figure>
@@ -71,9 +70,10 @@
 
           <li>
             <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__кarachaevsk.jpg">
+              <img class="gallery__image" src="./images/gallery__mechet.jpg"
+                alt="Центральная мечеть Сердце Чечни имени Ахмата Кадырова">
               <figcaption class="gallery__caption-container">
-                <p class="gallery__caption">Карачаевск</p>
+                <h2 class="gallery__caption">Мечеть</h2>
                 <div class="gallery__like"></div>
               </figcaption>
             </figure>
@@ -81,9 +81,10 @@
 
           <li>
             <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__кarachaevsk.jpg">
+              <img class="gallery__image" src="./images/gallery__mozdok.jpg"
+                alt="Памятник Участникам боевых действий в Афганистане представляет собой человеческую руку с гранатой">
               <figcaption class="gallery__caption-container">
-                <p class="gallery__caption">Карачаевск</p>
+                <h2 class="gallery__caption">Моздок</h2>
                 <div class="gallery__like"></div>
               </figcaption>
             </figure>
@@ -91,9 +92,9 @@
 
           <li>
             <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__кarachaevsk.jpg">
+              <img class="gallery__image" src="./images/gallery__dacan.jpg" alt="Иволгинский Дацан в Бурятии">
               <figcaption class="gallery__caption-container">
-                <p class="gallery__caption">Карачаевск</p>
+                <h2 class="gallery__caption">Дацан</h2>
                 <div class="gallery__like"></div>
               </figcaption>
             </figure>
@@ -101,16 +102,13 @@
 
           <li>
             <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__кarachaevsk.jpg">
+              <img class="gallery__image" src="./images/gallery__rodina-mat.jpg" alt="Памятник Родина-мать">
               <figcaption class="gallery__caption-container">
-                <p class="gallery__caption">Карачаевск</p>
+                <h2 class="gallery__caption">Родина-мать</h2>
                 <div class="gallery__like"></div>
               </figcaption>
             </figure>
           </li>
-
-
-
         </ul>
 
       </section>

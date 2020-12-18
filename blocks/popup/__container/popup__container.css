@@ -19,7 +19,6 @@
     width: 282px;
     height: 322px;
     padding: 25px 22px;
-
     left: calc(50% - 282px/2);
     top: calc(50% - 322px/2);
   }
