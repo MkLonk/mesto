@@ -1,6 +1,6 @@
 let buttonEdit = document.querySelector('.profile__button-edit'); // находим кнопку button-edit в DOM
 let buttonClose = document.querySelector('.popup__button-close'); // находим кнопку button-close в DOM
-let formProfile = document.querySelector('.popup__container');// находим форму popup__container в DOM
+let formProfile = document.querySelector('.popup__form');// находим форму popup__container в DOM
 
 // Функция открытия/закрытия popup
 function popupVision() {

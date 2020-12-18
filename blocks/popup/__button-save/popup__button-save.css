@@ -5,7 +5,7 @@
   border: 0;
   border-radius: 2px;
   padding: 0;
-  margin-top: 48px;
+  margin: 47px 36px 0;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
@@ -15,7 +15,7 @@
 @media screen and (max-width: 560px) {
   .popup__button-save {
     height: 46px;
-    margin-top: 45px;
+    margin: 45px 22px 0;
     font-size: 14px;
     line-height: 17px;
   }
