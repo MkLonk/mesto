@@ -13,9 +13,7 @@
   <div class="root">
 
     <header class="header">
-      <div class="header__container">
-        <div class="header__logo"></div>
-      </div>
+      <div class="header__logo"></div>
     </header>
 
     <main class="content">
@@ -25,106 +23,105 @@
           <div class="profile__avatar"></div>
           <div class="profile__user-container">
             <h1 class="profile__user-name">Жак-Ив Кусто</h1>
-            <div class="profile__button-edit"></div>
+            <button class="profile__button-edit" type="button" aria-label="Редактировать профиль"></button>
           </div>
-          <div class="profile__button-add"></div>
+          <button class="profile__button-add" type="button" aria-label="Добавить фото"></button>
           <p class="profile__user-job">Исследователь океана</p>
-        </div>
-      </section>
-
-      <section class="popup">
-        <div class="popup__container">
-          <form class="popup__form">
-            <h2 class="popup__title">Редактировать профиль</h2>
-            <div class="popup__input-fields">
-              <input class="popup__text-input user-name-input" type="text" name="userNameInput"
-                placeholder="Иванов Иван" required>
-              <input class="popup__text-input user-job-input" type="text" name="userJobInput"
-                placeholder="Шахтер 6 разряда" required>
-            </div>
-            <button class="popup__button-save" type="submit" value="Сохранить">Сохранить</button>
-            <div class="popup__button-close"></div>
-          </form>
         </div>
       </section>
 
       <section class="gallery">
         <ul class="gallery__photo-grid">
           <li>
-            <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__baikal.jpg" alt="Зимний Байкал">
-              <figcaption class="gallery__caption-container">
-                <h2 class="gallery__caption">Зимний Байкал</h2>
-                <div class="gallery__like"></div>
-              </figcaption>
-            </figure>
+            <article class="card">
+              <img class="card__image" src="./images/gallery__baikal.jpg" alt="Зимний Байкал">
+              <div class="card__caption-container">
+                <h2 class="card__caption">Зимний Байкал</h2>
+                <button class="card__like" type="button" aria-label="Нравится"></button>
+              </div>
+            </article>
+          </li>
+
+
+
+          <li>
+            <article class="card">
+              <img class="card__image" src="./images/gallery__kizhi.jpg" alt="Кижи">
+              <div class="card__caption-container">
+                <h2 class="card__caption">Кижи</h2>
+                <button class="card__like" type="button" aria-label="Нравится"></button>
+              </div>
+            </article>
           </li>
 
           <li>
-            <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__kizhi.jpg" alt="Кижи">
-              <figcaption class="gallery__caption-container">
-                <h2 class="gallery__caption">Кижи</h2>
-                <div class="gallery__like"></div>
-              </figcaption>
-            </figure>
-          </li>
-
-          <li>
-            <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__mechet.jpg"
+            <article class="card">
+              <img class="card__image" src="./images/gallery__mechet.jpg"
                 alt="Центральная мечеть Сердце Чечни имени Ахмата Кадырова">
-              <figcaption class="gallery__caption-container">
-                <h2 class="gallery__caption">Мечеть</h2>
-                <div class="gallery__like"></div>
-              </figcaption>
-            </figure>
+              <div class="card__caption-container">
+                <h2 class="card__caption">Мечеть</h2>
+                <button class="card__like" type="button" aria-label="Нравится"></button>
+              </div>
+            </article>
           </li>
 
           <li>
-            <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__mozdok.jpg"
+            <article class="card">
+              <img class="card__image" src="./images/gallery__mozdok.jpg"
                 alt="Памятник Участникам боевых действий в Афганистане представляет собой человеческую руку с гранатой">
-              <figcaption class="gallery__caption-container">
-                <h2 class="gallery__caption">Моздок</h2>
-                <div class="gallery__like"></div>
-              </figcaption>
-            </figure>
+              <div class="card__caption-container">
+                <h2 class="card__caption">Моздок</h2>
+                <button class="card__like" type="button" aria-label="Нравится"></button>
+              </div>
+            </article>
           </li>
 
           <li>
-            <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__dacan.jpg" alt="Иволгинский Дацан в Бурятии">
-              <figcaption class="gallery__caption-container">
-                <h2 class="gallery__caption">Дацан</h2>
-                <div class="gallery__like"></div>
-              </figcaption>
-            </figure>
+            <article class="card">
+              <img class="card__image" src="./images/gallery__dacan.jpg" alt="Иволгинский Дацан в Бурятии">
+              <div class="card__caption-container">
+                <h2 class="card__caption">Дацан</h2>
+                <button class="card__like" type="button" aria-label="Нравится"></button>
+              </div>
+            </article>
           </li>
 
           <li>
-            <figure class="gallery__item">
-              <img class="gallery__image" src="./images/gallery__rodina-mat.jpg" alt="Памятник Родина-мать">
-              <figcaption class="gallery__caption-container">
-                <h2 class="gallery__caption">Родина-мать</h2>
-                <div class="gallery__like"></div>
-              </figcaption>
-            </figure>
+            <article class="card">
+              <img class="card__image" src="./images/gallery__rodina-mat.jpg" alt="Памятник Родина-мать">
+              <div class="card__caption-container">
+                <h2 class="card__caption">Родина-мать</h2>
+                <button class="card__like" type="button" aria-label="Нравится"></button>
+              </div>
+            </article>
           </li>
         </ul>
 
       </section>
 
+      <section class="popup">
+
+        <form class="popup__form" name="popup__form" method="get">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <div class="popup__input-fields">
+            <input class="popup__input popup__input_user_name" type="text" name="userNameInput"
+              placeholder="Ваше имя?" required>
+            <input class="popup__input popup__input_user_job" type="text" name="userJobInput" placeholder="Чем занимаетесь?"
+              required>
+          </div>
+          <button class="popup__button-save" type="submit" value="Сохранить">Сохранить</button>
+          <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
+        </form>
+
+      </section>
     </main>
 
     <footer class="footer">
-      <div class="footer__container">
-        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
-      </div>
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 
   </div>
-  <script src="script.js"></script>
+  <script src="./script/script.js"></script>
 </body>
 
 </html>

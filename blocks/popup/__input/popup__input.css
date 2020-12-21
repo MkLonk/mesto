@@ -1,8 +1,8 @@
-.popup__text-input {
+.popup__input {
   border: 0;
-  width: calc(100% - 72px);
+  width: calc(100% - 12px);
+  margin-bottom: 17px;
   padding: 6px;
-  margin: 0 30px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   font-weight: 400;
   font-size: 14px;
@@ -10,18 +10,18 @@
   font-family: inherit;
 }
 
-.popup__text-input:first-child {
-  margin-bottom: 17px;
+.popup__input:last-child {
+  margin-bottom: 48px;
 }
 
 @media screen and (max-width: 560px) {
-  .popup__text-input {
-    padding: 7px;
-    margin: 0 17px;
+  .popup__input {
+    padding: 6px;
+    margin-bottom: 27px;
     font-size: 14px;
     line-height: 17px;
   }
-  .popup__text-input:first-child {
-    margin-bottom: 25px;
+  .popup__input:last-child {
+    margin-bottom: 45px;
   }
 }
