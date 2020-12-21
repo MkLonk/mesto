@@ -6,15 +6,19 @@
   background-repeat: no-repeat;
 }
 
+/* Реализуем плавное наростение паддинга слева от лого*/
+
 @media screen and (max-width: 918px) {
   .header__logo {
     margin-left: calc((100vw - 918px)*-1);
   }
 }
 
-@media screen and (max-width: 899px) {
+/* Фиксируем паддинг слева от лого*/
+
+@media screen and (max-width: 891px) {
   .header__logo {
-    margin-left: 19px;
+    margin-left: 27px;
   }
 }
 

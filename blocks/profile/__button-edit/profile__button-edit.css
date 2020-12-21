@@ -2,6 +2,9 @@
   width: 25px;
   height: 25px;
   margin-top: 5px;
+  padding: 0;
+  outline: none;
+  background-color: transparent;
   border: solid 1px #fff;
   align-self: center;
   box-sizing: border-box;
@@ -10,6 +13,7 @@
   background-position: center;
   opacity: 1;
   transition: opacity 0.4s ease-in-out;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 700px) {

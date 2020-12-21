@@ -1,6 +1,5 @@
 .profile__container {
   width: 880px;
-  height: 120px;
   display: grid;
   grid-template-columns: 150px 1fr 150px;
   grid-template-rows: 1fr 1fr;
@@ -14,7 +13,6 @@
 
 @media screen and (max-width: 700px) {
   .profile__container {
-    height: 286px;
     grid-template-columns: 282px;
     grid-template-rows: 146px 32px 25px 80px;
     justify-content: center;
