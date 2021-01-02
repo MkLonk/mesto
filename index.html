@@ -32,6 +32,8 @@
 
       <section class="gallery">
         <ul class="gallery__photo-grid">
+
+          <!--
           <li>
             <article class="card">
               <img class="card__image" src="./images/gallery__baikal.jpg" alt="Зимний Байкал">
@@ -92,7 +94,8 @@
                 <button class="card__like" type="button" aria-label="Нравится"></button>
               </div>
             </article>
-          </li>
+          </li> 
+        -->
         </ul>
 
       </section>
@@ -102,10 +105,10 @@
         <form class="popup__form" name="popup__form" method="get">
           <h2 class="popup__title">Редактировать профиль</h2>
           <div class="popup__input-fields">
-            <input class="popup__input popup__input_user_name" type="text" name="userNameInput"
-              placeholder="Ваше имя?" required>
-            <input class="popup__input popup__input_user_job" type="text" name="userJobInput" placeholder="Чем занимаетесь?"
+            <input class="popup__input popup__input_user_name" type="text" name="userNameInput" placeholder="Ваше имя?"
               required>
+            <input class="popup__input popup__input_user_job" type="text" name="userJobInput"
+              placeholder="Чем занимаетесь?" required>
           </div>
           <button class="popup__button-save" type="submit" value="Сохранить">Сохранить</button>
           <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
@@ -119,7 +122,22 @@
     </footer>
 
   </div>
-  ы
+
+  <!-- Шаблон блока card -->
+  <template class="card-template"> 
+    <li>
+      <article class="card">
+        <img class="card__image">
+        <div class="card__caption-container">
+          <h2 class="card__caption"></h2>
+          <button class="card__like" type="button" aria-label="Нравится"></button>
+        </div>
+      </article>
+    </li>
+  </template>
+
+
+  <script src="./script/initialCards.js"></script>
   <script src="./script/script.js"></script>
 </body>
 

@@ -9,6 +9,27 @@ let buttonClose = formPopup.querySelector('.popup__button-close'); //наход�
 let userNameInput = formPopup.querySelector('.popup__input_user_name'); //находим в блоке "popup" поле popup__input_user_name
 let userJobInput = formPopup.querySelector('.popup__input_user_job'); //находим в блоке "popup" поле popup__input_user_job
 
+
+const galleryElementTemplate = document.querySelector('.card-template').content; //находим блок-шаблон "card-template" в DOM
+const galleryContainer = document.querySelector('.gallery__photo-grid'); //находим блок-шаблон "card-template" в DOM
+
+
+// Функция заполнения блока Галерея элементами «из коробки»
+function fillGallery() {
+
+  initialCards.forEach(element => {
+
+    const galleryElement = galleryElementTemplate.cloneNode(true); // клонируем из шаблона
+
+    galleryElement.querySelector('.card__image').src = element.link; // url фото
+    //galleryElement.querySelector('.card__image').alt = 'Архыз'; // alt фото
+    galleryElement.querySelector('.card__caption').textContent = element.name; // caption фото
+
+    galleryContainer.append(galleryElement); // отображаем на странице
+  })
+}
+fillGallery()
+
 // Функция открытия popup
 function openPopup() {
   userNameInput.value = userName.textContent; // подставляем в поле user-input сохраненой имя пользователя
