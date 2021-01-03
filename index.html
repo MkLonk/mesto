@@ -100,9 +100,10 @@
 
       </section>
 
-      <section class="popup">
+      <!-- Попап для формы редактирования profile -->
+      <div class="popup popup-edit-profile">
 
-        <form class="popup__form" name="popup__form" method="get">
+        <form class="popup__form" name="form-profile" method="get">
           <h2 class="popup__title">Редактировать профиль</h2>
           <div class="popup__input-fields">
             <input class="popup__input popup__input_user_name" type="text" name="userNameInput" placeholder="Ваше имя?"
@@ -114,7 +115,25 @@
           <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
         </form>
 
-      </section>
+      </div>
+
+      <!-- Попап для формы добавления новой карточки -->
+      <div class="popup popup-add-gallery">
+
+        <form class="popup__form" name="form-gallery" method="get">
+          <h2 class="popup__title">Новое место</h2>
+          <div class="popup__input-fields">
+            <input class="popup__input popup__input_mesto_name" type="text" name="mestoNameInput" placeholder="Название"
+              required>
+            <input class="popup__input popup__input_mesto_link" type="text" name="mestoLinkInput"
+              placeholder="Ссылка на картинку" required>
+          </div>
+          <button class="popup__button-save" type="submit" value="Сохранить">Сохранить</button>
+          <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
+        </form>
+      </div>
+
+
     </main>
 
     <footer class="footer">
@@ -124,7 +143,7 @@
   </div>
 
   <!-- Шаблон блока card -->
-  <template class="card-template"> 
+  <template class="card-template">
     <li>
       <article class="card">
         <img class="card__image">
