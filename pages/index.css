@@ -25,6 +25,10 @@
 @import url(../blocks/card/__like/_active/card__like_active.css);
 @import url(../blocks/card/__delete/card__delete.css);
 
+@import url(../blocks/card/__image-full-container/card__image-full-container.css);
+@import url(../blocks/card/__image-full/card__image-full.css);
+@import url(../blocks/card/__caption-full/card__caption-full.css);
+
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);

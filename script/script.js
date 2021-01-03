@@ -26,23 +26,42 @@ const galleryContainer = document.querySelector('.gallery__photo-grid'); //на�
 
 // Функция заполнения Галереи элементами
 function fillGallery(nameImage, linkImage, insert = 'append') {
-
   const galleryElement = galleryElementTemplate.cloneNode(true); // клонируем из шаблона
-  galleryElement.querySelector('.card__image').src = linkImage; // url фото
+  
+  galleryElement.querySelector('.card__image').src = linkImage; // url фото для миниатюры
   galleryElement.querySelector('.card__caption').textContent = nameImage; // caption фото
+  galleryElement.querySelector('.card__image-full').src = linkImage; // url фото для полного экрана
+  galleryElement.querySelector('.card__caption-full').textContent = nameImage; // caption для полного экрана
 
-  galleryElement.querySelector('.card__like').addEventListener('click', function (evt) { // вешаем слушатель на лайк
+  // вешаем слушатель на лайк
+  galleryElement.querySelector('.card__like').addEventListener('click', function (evt) { 
     const eventTarget = evt.target;
     eventTarget.classList.toggle('card__like_active');
   });
 
-  galleryElement.querySelector('.card__delete').addEventListener('click', function (evt) { // вешаем слушатель на delete
-    const deleteElement = evt.target.closest('.gallery__element')    
-    deleteElement.remove()
+  // вешаем слушатель на delete
+ // const deleteElement = evt.target.closest('.gallery__element');
+  galleryElement.querySelector('.card__delete').addEventListener('click', function (evt) {
+    const deleteElement = evt.target.closest('.gallery__element');
+    deleteElement.remove();
   });
 
+  // вешаем слушатель на клик по картинке card__image
+  galleryElement.querySelector('.card__image').addEventListener('click', function (evt) {
+    const popupGalleryElement = evt.target.closest('.gallery__element').querySelector('.popup-gallery-element');
+    popupGalleryElement.classList.add('popup_opened');
+  });
+
+  // вешаем слушатель на клик по button-close на картинке открытого попапа
+  galleryElement.querySelector('.popup__button-close').addEventListener('click', function (evt) {
+    const closePopupGalleryElement = evt.target.closest('.popup-gallery-element');
+    closePopupGalleryElement.classList.remove('popup_opened')
+  });
+
+
+// отображаем элемент вконце, или начале галереи
   if (insert === 'prepend') {
-    galleryContainer.prepend(galleryElement); // отображаем на странице
+    galleryContainer.prepend(galleryElement); 
   } else {
     galleryContainer.append(galleryElement);
   }
