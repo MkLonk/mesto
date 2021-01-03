@@ -23,7 +23,8 @@ const mestoLinkInput = formGallery.querySelector('.popup__input_mesto_link');
 const galleryElementTemplate = document.querySelector('.card-template').content; //находим блок-шаблон "card-template" в DOM
 const galleryContainer = document.querySelector('.gallery__photo-grid'); //находим контейнер для карт "card-template" в DOM
 
-// Функция заполнения блока Галерея элементами «из коробки»
+
+// Функция заполнения Галереи элементами
 function fillGallery(nameImage, linkImage, insert = 'append') {
 
   const galleryElement = galleryElementTemplate.cloneNode(true); // клонируем из шаблона
@@ -33,6 +34,11 @@ function fillGallery(nameImage, linkImage, insert = 'append') {
   galleryElement.querySelector('.card__like').addEventListener('click', function (evt) { // вешаем слушатель на лайк
     const eventTarget = evt.target;
     eventTarget.classList.toggle('card__like_active');
+  });
+
+  galleryElement.querySelector('.card__delete').addEventListener('click', function (evt) { // вешаем слушатель на delete
+    const deleteElement = evt.target.closest('.gallery__element')    
+    deleteElement.remove()
   });
 
   if (insert === 'prepend') {
@@ -87,16 +93,6 @@ function handleFormProfileSubmit(evt) {
 }
 
 // Функция сохренения данных из формы "popup__form" блока popup-add-gallery
-/* function handleFormGallerySubmit(evt) {
-  evt.preventDefault();
-  const galleryElement = galleryElementTemplate.cloneNode(true); // клонируем из шаблона
-  galleryElement.querySelector('.card__image').src = mestoLinkInput.value; // url фото
-  galleryElement.querySelector('.card__caption').textContent = mestoNameInput.value; // caption фото
-  galleryContainer.prepend(galleryElement); // отображаем на странице вначале блока gallery
-
-  closePopupGallery(); // закрываем popup после изменений
-} */
-
 function handleFormGallerySubmit(evt) {
   evt.preventDefault();
   fillGallery(mestoNameInput.value, mestoLinkInput.value, 'prepend'); // через функцию  fillGallery да
