@@ -27,7 +27,7 @@ const galleryContainer = document.querySelector('.gallery__photo-grid'); //на�
 // Функция заполнения Галереи элементами
 function fillGallery(nameImage, linkImage, insert = 'append') {
   const galleryElement = galleryElementTemplate.cloneNode(true); // клонируем из шаблона
-  
+
   galleryElement.querySelector('.card__image').src = linkImage; // url фото для миниатюры
   galleryElement.querySelector('.card__caption').textContent = nameImage; // caption фото
   galleryElement.querySelector('.card__image-full').src = linkImage; // url фото для полного экрана
@@ -40,7 +40,6 @@ function fillGallery(nameImage, linkImage, insert = 'append') {
   });
 
   // вешаем слушатель на delete
- // const deleteElement = evt.target.closest('.gallery__element');
   galleryElement.querySelector('.card__delete').addEventListener('click', function (evt) {
     const deleteElement = evt.target.closest('.gallery__element');
     deleteElement.remove();
@@ -57,6 +56,11 @@ function fillGallery(nameImage, linkImage, insert = 'append') {
     const closePopupGalleryElement = evt.target.closest('.popup-gallery-element');
     closePopupGalleryElement.classList.remove('popup_opened')
   });
+
+    // вешаем слушатель на клик за границами картинки при открытом попапе
+    galleryElement.querySelector('.popup-gallery-element').addEventListener('click', function (evt) {
+      evt.target.classList.remove('popup_opened');
+    });
 
 
 // отображаем элемент вконце, или начале галереи
