@@ -12,7 +12,6 @@
   background-size: cover;
   opacity: 1;
   transition: opacity 0.4s ease-in-out;
-  transition: background-image 0.4s ease-in-out;
 }
 
 .card__like:hover {
@@ -24,4 +23,5 @@
   opacity: 1;
   background-image: url(../../../images/gallery__like-active.svg);
   padding: 0;
+  transition: opacity 0.4s ease-in-out;
 }

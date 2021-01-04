@@ -1,4 +1,4 @@
-.popup__input {
+.form__input {
   border: 0;
   width: calc(100% - 12px);
   margin-bottom: 17px;
@@ -10,18 +10,18 @@
   font-family: inherit;
 }
 
-.popup__input:last-child {
+.form__input:last-child {
   margin-bottom: 48px;
 }
 
 @media screen and (max-width: 560px) {
-  .popup__input {
+  .form__input {
     padding: 6px;
     margin-bottom: 27px;
     font-size: 14px;
     line-height: 17px;
   }
-  .popup__input:last-child {
+  .form__input:last-child {
     margin-bottom: 45px;
   }
 }
