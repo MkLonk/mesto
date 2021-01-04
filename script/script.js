@@ -29,8 +29,10 @@ function fillGallery(nameImage, linkImage, insert = 'append') {
   const galleryElement = galleryElementTemplate.cloneNode(true); // клонируем из шаблона
 
   galleryElement.querySelector('.card__image').src = linkImage; // url фото для миниатюры
+  galleryElement.querySelector('.card__image').alt = nameImage; // alt фото для миниатюры
   galleryElement.querySelector('.card__caption').textContent = nameImage; // caption фото
   galleryElement.querySelector('.card__image-full').src = linkImage; // url фото для полного экрана
+  galleryElement.querySelector('.card__image-full').alt = nameImage; // alt фото для полного экрана
   galleryElement.querySelector('.card__caption-full').textContent = nameImage; // caption для полного экрана
 
   // вешаем слушатель на лайк
