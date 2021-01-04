@@ -1,7 +1,7 @@
 //переменные блока profile
 const profile = document.querySelector('.profile'); //находим блок "profile" в DOM
-const buttonEdit = profile.querySelector('.profile__button-edit'); //находим кнопку button-edit
-const buttonAdd = profile.querySelector('.profile__button-add'); //находим кнопку button-add
+const buttonEditProfile = profile.querySelector('.profile__button-edit'); //находим кнопку button-edit
+const buttonAddGallery = profile.querySelector('.profile__button-add'); //находим кнопку button-add
 const userName = profile.querySelector('.profile__user-name'); //находим userName
 const userJob = profile.querySelector('.profile__user-job'); //находим userJob
 
@@ -126,8 +126,8 @@ function handleFormGallerySubmit(evt) {
 initialCards.forEach(element => fillGallery(element.name, element.link));
 
 // Все слушатели
-buttonEdit.addEventListener('click', openPopupProfile); // ждем клик по кнопке button-edit
-buttonAdd.addEventListener('click', openPopupGallery); // ждем клик по кнопке button-add
+buttonEditProfile.addEventListener('click', openPopupProfile); // ждем клик по кнопке button-edit
+buttonAddGallery.addEventListener('click', openPopupGallery); // ждем клик по кнопке button-add
 
 buttonClosePopupEditProfile.addEventListener('click', closePopupProfile); // ждем клик по button-close в форме Profile
 buttonClosePopupAddGallery.addEventListener('click', closePopupGallery); // ждем клик по button-close в форме Gallery
