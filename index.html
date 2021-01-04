@@ -33,85 +33,21 @@
       <section class="gallery">
         <ul class="gallery__photo-grid">
 
-          <!--
-          <li>
-            <article class="card">
-              <img class="card__image" src="./images/gallery__baikal.jpg" alt="Зимний Байкал">
-              <div class="card__caption-container">
-                <h2 class="card__caption">Зимний Байкал</h2>
-                <button class="card__like" type="button" aria-label="Нравится"></button>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="card">
-              <img class="card__image" src="./images/gallery__kizhi.jpg" alt="Кижи">
-              <div class="card__caption-container">
-                <h2 class="card__caption">Кижи</h2>
-                <button class="card__like" type="button" aria-label="Нравится"></button>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="card">
-              <img class="card__image" src="./images/gallery__mechet.jpg"
-                alt="Центральная мечеть Сердце Чечни имени Ахмата Кадырова">
-              <div class="card__caption-container">
-                <h2 class="card__caption">Мечеть</h2>
-                <button class="card__like" type="button" aria-label="Нравится"></button>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="card">
-              <img class="card__image" src="./images/gallery__mozdok.jpg"
-                alt="Памятник Участникам боевых действий в Афганистане представляет собой человеческую руку с гранатой">
-              <div class="card__caption-container">
-                <h2 class="card__caption">Моздок</h2>
-                <button class="card__like" type="button" aria-label="Нравится"></button>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="card">
-              <img class="card__image" src="./images/gallery__dacan.jpg" alt="Иволгинский Дацан в Бурятии">
-              <div class="card__caption-container">
-                <h2 class="card__caption">Дацан</h2>
-                <button class="card__like" type="button" aria-label="Нравится"></button>
-              </div>
-            </article>
-          </li>
-
-          <li>
-            <article class="card">
-              <img class="card__image" src="./images/gallery__rodina-mat.jpg" alt="Памятник Родина-мать">
-              <div class="card__caption-container">
-                <h2 class="card__caption">Родина-мать</h2>
-                <button class="card__like" type="button" aria-label="Нравится"></button>
-              </div>
-            </article>
-          </li> 
-        -->
         </ul>
-
       </section>
 
       <!-- Попап для формы редактирования profile -->
       <div class="popup popup-edit-profile">
 
-        <form class="popup__form" name="form-profile" method="get">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <div class="popup__input-fields">
-            <input class="popup__input popup__input_user_name" type="text" name="userNameInput" placeholder="Ваше имя?"
+        <form class="form form_edit-profile" name="form_edit-profile" method="get">
+          <h2 class="form__title">Редактировать профиль</h2>
+          <div class="form__inputs">
+            <input class="form__input form__input_user_name" type="text" name="userNameInput" placeholder="Ваше имя?"
               required>
-            <input class="popup__input popup__input_user_job" type="text" name="userJobInput"
+            <input class="form__input form__input_user_job" type="text" name="userJobInput"
               placeholder="Чем занимаетесь?" required>
           </div>
-          <button class="popup__button-save" type="submit" value="Сохранить">Сохранить</button>
+          <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
           <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
         </form>
 
@@ -120,15 +56,15 @@
       <!-- Попап для формы добавления новой карточки -->
       <div class="popup popup-add-gallery">
 
-        <form class="popup__form" name="form-gallery" method="get">
-          <h2 class="popup__title">Новое место</h2>
-          <div class="popup__input-fields">
-            <input class="popup__input popup__input_mesto_name" type="text" name="mestoNameInput" placeholder="Название"
+        <form class="form form_add-gallery" name="form_add-gallery" method="get">
+          <h2 class="form__title">Новое место</h2>
+          <div class="form__inputs">
+            <input class="form__input form__input_mesto_name" type="text" name="mestoNameInput" placeholder="Название"
               required>
-            <input class="popup__input popup__input_mesto_link" type="text" name="mestoLinkInput"
+            <input class="form__input form__input_mesto_link" type="text" name="mestoLinkInput"
               placeholder="Ссылка на картинку" required>
           </div>
-          <button class="popup__button-save" type="submit" value="Сохранить">Сохранить</button>
+          <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
           <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
         </form>
       </div>

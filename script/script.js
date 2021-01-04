@@ -1,30 +1,30 @@
 //переменные блока profile
 const profile = document.querySelector('.profile'); //находим блок "profile" в DOM
-const buttonEdit = profile.querySelector('.profile__button-edit'); //находим кнопку button-edit в блоке "profile"
-const buttonAdd = profile.querySelector('.profile__button-add'); //находим кнопку button-add в блоке "profile"
-const userName = profile.querySelector('.profile__user-name'); //находим userName в блоке "profile"
-const userJob = profile.querySelector('.profile__user-job'); //находим userJob в блоке "profile"
+const buttonEdit = profile.querySelector('.profile__button-edit'); //находим кнопку button-edit
+const buttonAdd = profile.querySelector('.profile__button-add'); //находим кнопку button-add
+const userName = profile.querySelector('.profile__user-name'); //находим userName
+const userJob = profile.querySelector('.profile__user-job'); //находим userJob
 
-//переменные блока popup-edit-profile
+// ищем блок popup-edit-profile, и переменные для формы form_edit-profile
 const popupEditProfile = document.querySelector('.popup-edit-profile'); // находим блок "popup-edit-profile" в DOM
-const formProfile = popupEditProfile.querySelector('.popup__form'); // находим форму "popup__container" в блоке "popup-edit-profile"
-const buttonCloseProfile = formProfile.querySelector('.popup__button-close'); //находим кнопку button-close в "formPopup"
-const userNameInput = formProfile.querySelector('.popup__input_user_name'); //находим в "formPopup" поле popup__input_user_name
-const userJobInput = formProfile.querySelector('.popup__input_user_job'); //находим в "formPopup" поле popup__input_user_job
+const buttonClosePopupEditProfile = popupEditProfile.querySelector('.popup__button-close'); //находим кнопку button-close
+const formProfile = popupEditProfile.querySelector('.form_edit-profile'); // находим форму "form_edit-profile"
+const userNameInput = formProfile.querySelector('.form__input_user_name'); // находим поле form__input_user_name
+const userJobInput = formProfile.querySelector('.form__input_user_job'); // находим поле form__input_user_job 
 
-//переменные блока-шаблона popup-add-gallery
+// ищем блок popup-add-gallery, и переменные для формы form_add-gallery
 const popupAddGallery = document.querySelector('.popup-add-gallery'); // ищем блок "popup-add-gallery" в DOM
-const formGallery = popupAddGallery.querySelector('.popup__form');
-const buttonCloseGallery = formGallery.querySelector('.popup__button-close');
-const mestoNameInput = formGallery.querySelector('.popup__input_mesto_name');
-const mestoLinkInput = formGallery.querySelector('.popup__input_mesto_link');
+const buttonClosePopupAddGallery = popupAddGallery.querySelector('.popup__button-close'); // находим кнопку button-close
+const formGallery = popupAddGallery.querySelector('.form_add-gallery'); // находим форму "form_add-gallery"
+const mestoNameInput = formGallery.querySelector('.form__input_mesto_name'); // находим поле form__input_mesto_name
+const mestoLinkInput = formGallery.querySelector('.form__input_mesto_link'); // находим поле form__input_mesto_link
 
-//переменные блока card-template
-const galleryElementTemplate = document.querySelector('.card-template').content; //находим блок-шаблон "card-template" в DOM
-const galleryContainer = document.querySelector('.gallery__photo-grid'); //находим контейнер для карт "card-template" в DOM
+//переменные блока card-template (шаблона card) 
+const galleryElementTemplate = document.querySelector('.card-template').content; //находим блок-шаблон "card-template"
+const galleryContainer = document.querySelector('.gallery__photo-grid'); //находим контейнер для карт "card-template"
 
 
-// Функция заполнения Галереи элементами
+// Функция заполнения галереи элементами
 function fillGallery(nameImage, linkImage, insert = 'append') {
   const galleryElement = galleryElementTemplate.cloneNode(true); // клонируем из шаблона
 
@@ -34,7 +34,7 @@ function fillGallery(nameImage, linkImage, insert = 'append') {
   galleryElement.querySelector('.card__caption-full').textContent = nameImage; // caption для полного экрана
 
   // вешаем слушатель на лайк
-  galleryElement.querySelector('.card__like').addEventListener('click', function (evt) { 
+  galleryElement.querySelector('.card__like').addEventListener('click', function (evt) {
     const eventTarget = evt.target;
     eventTarget.classList.toggle('card__like_active');
   });
@@ -57,15 +57,15 @@ function fillGallery(nameImage, linkImage, insert = 'append') {
     closePopupGalleryElement.classList.remove('popup_opened')
   });
 
-    // вешаем слушатель на клик за границами картинки при открытом попапе
-    galleryElement.querySelector('.popup-gallery-element').addEventListener('click', function (evt) {
-      evt.target.classList.remove('popup_opened');
-    });
+  // вешаем слушатель на клик за границами картинки при открытом попапе
+  galleryElement.querySelector('.popup-gallery-element').addEventListener('click', function (evt) {
+    evt.target.classList.remove('popup_opened');
+  });
 
 
-// отображаем элемент вконце, или начале галереи
+  // отображаем элемент вконце, или начале галереи
   if (insert === 'prepend') {
-    galleryContainer.prepend(galleryElement); 
+    galleryContainer.prepend(galleryElement);
   } else {
     galleryContainer.append(galleryElement);
   }
@@ -93,21 +93,21 @@ function closePopupGallery() {
   popupAddGallery.classList.remove('popup_opened');
 }
 
-// Функция для закрытия popup Profil, если клик за границами формы
+// Функция закрытия popup Profil, если клик за границами формы
 function clikMissPopupProfile(evt) {
   if (evt.target === evt.currentTarget) {
     closePopupProfile();
   }
 }
 
-// Функция для закрытия popup Gallery, если клик за границами формы
+// Функция закрытия popup Gallery, если клик за границами формы
 function clikMissPopupGallery(evt) {
   if (evt.target === evt.currentTarget) {
     closePopupGallery();
   }
 }
 
-// Функция сохренения данных из формы "popup__form" блока popup-edit-profile
+// Функция сохренения данных из form_edit-profile
 function handleFormProfileSubmit(evt) {
   evt.preventDefault();
   userName.textContent = userNameInput.value; // сохраняем значение поля user-name-input на странице
@@ -115,25 +115,25 @@ function handleFormProfileSubmit(evt) {
   closePopupProfile(); // закрываем popup после изменений
 }
 
-// Функция сохренения данных из формы "popup__form" блока popup-add-gallery
+// Функция сохренения данных из form_add-gallery
 function handleFormGallerySubmit(evt) {
   evt.preventDefault();
   fillGallery(mestoNameInput.value, mestoLinkInput.value, 'prepend'); // через функцию  fillGallery да
   closePopupGallery(); // закрываем popup Gallery после изменений
 }
 
-// заполняем галерею элементами из массива initialCards, через функцию  fillGallery()
+// заполняем галерею элементами массива initialCards, через функцию  fillGallery()
 initialCards.forEach(element => fillGallery(element.name, element.link));
 
 // Все слушатели
 buttonEdit.addEventListener('click', openPopupProfile); // ждем клик по кнопке button-edit
 buttonAdd.addEventListener('click', openPopupGallery); // ждем клик по кнопке button-add
 
-buttonCloseProfile.addEventListener('click', closePopupProfile); // ждем клик по кнопке button-close в блоке "popup"
-buttonCloseGallery.addEventListener('click', closePopupGallery); // ждем клик по кнопке button-close в блоке "popup"
+buttonClosePopupEditProfile.addEventListener('click', closePopupProfile); // ждем клик по button-close в форме Profile
+buttonClosePopupAddGallery.addEventListener('click', closePopupGallery); // ждем клик по button-close в форме Gallery
 
-popupEditProfile.addEventListener('click', clikMissPopupProfile) // ждем клик за границами формы popup Profile
-popupAddGallery.addEventListener('click', clikMissPopupGallery) // ждем клик за границами формы popup Gallery
+popupEditProfile.addEventListener('click', clikMissPopupProfile) // ждем клик за границами формы Profile
+popupAddGallery.addEventListener('click', clikMissPopupGallery) // ждем клик за границами формы Gallery
 
-formProfile.addEventListener('submit', handleFormProfileSubmit); // ждем клик по кнопке "сохранить" в блоке "popup"
-formGallery.addEventListener('submit', handleFormGallerySubmit); // ждем клик по кнопке "сохранить" в блоке "popup"
+formProfile.addEventListener('submit', handleFormProfileSubmit); // ждем клик "сохранить" в форме Profile
+formGallery.addEventListener('submit', handleFormGallerySubmit); // ждем клик "сохранить" в форме Gallery
