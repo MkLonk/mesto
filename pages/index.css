@@ -19,15 +19,15 @@
 
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__image/card__image.css);
+@import url(../blocks/card/__delete/card__delete.css);
 @import url(../blocks/card/__caption-container/card__caption-container.css);
 @import url(../blocks/card/__caption/card__caption.css);
 @import url(../blocks/card/__like/card__like.css);
 @import url(../blocks/card/__like/_active/card__like_active.css);
-@import url(../blocks/card/__delete/card__delete.css);
 
-@import url(../blocks/card/__image-full-container/card__image-full-container.css);
-@import url(../blocks/card/__image-full/card__image-full.css);
-@import url(../blocks/card/__caption-full/card__caption-full.css);
+@import url(../blocks/full-screen/full-screen.css);
+@import url(../blocks/full-screen/__image/full-screen__image.css);
+@import url(../blocks/full-screen/__caption/full-screen__caption.css);
 
 
 @import url(../blocks/popup/popup.css);
