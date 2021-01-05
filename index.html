@@ -35,42 +35,51 @@
 
         </ul>
       </section>
-
-      <!-- Попап для формы редактирования profile -->
-      <div class="popup popup-edit-profile">
-
-        <form class="form form_edit-profile" name="form_edit-profile" method="get">
-          <h2 class="form__title">Редактировать профиль</h2>
-          <div class="form__inputs">
-            <input class="form__input form__input_user_name" type="text" name="userNameInput" placeholder="Ваше имя?"
-              required>
-            <input class="form__input form__input_user_job" type="text" name="userJobInput"
-              placeholder="Чем занимаетесь?" required>
-          </div>
-          <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
-          <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
-        </form>
-
-      </div>
-
-      <!-- Попап для формы добавления новой карточки -->
-      <div class="popup popup-add-gallery">
-
-        <form class="form form_add-gallery" name="form_add-gallery" method="get">
-          <h2 class="form__title">Новое место</h2>
-          <div class="form__inputs">
-            <input class="form__input form__input_mesto_name" type="text" name="mestoNameInput" placeholder="Название"
-              required>
-            <input class="form__input form__input_mesto_link" type="text" name="mestoLinkInput"
-              placeholder="Ссылка на картинку" required>
-          </div>
-          <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
-          <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
-        </form>
-      </div>
-
-
     </main>
+
+
+    <!-- Попап для формы редактирования profile -->
+    <div class="popup popup-edit-profile">
+
+      <form class="form form_edit-profile" name="form_edit-profile" method="get">
+        <h2 class="form__title">Редактировать профиль</h2>
+        <div class="form__inputs">
+          <input class="form__input form__input_user_name" type="text" name="userNameInput" placeholder="Ваше имя?"
+            required>
+          <input class="form__input form__input_user_job" type="text" name="userJobInput" placeholder="Чем занимаетесь?"
+            required>
+        </div>
+        <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
+        <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
+      </form>
+
+    </div>
+
+    <!-- Попап для формы добавления новой карточки в gallery -->
+    <div class="popup popup-add-gallery">
+
+      <form class="form form_add-gallery" name="form_add-gallery" method="get">
+        <h2 class="form__title">Новое место</h2>
+        <div class="form__inputs">
+          <input class="form__input form__input_mesto_name" type="text" name="mestoNameInput" placeholder="Название"
+            required>
+          <input class="form__input form__input_mesto_link" type="text" name="mestoLinkInput"
+            placeholder="Ссылка на картинку" required>
+        </div>
+        <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
+        <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
+      </form>
+    </div>
+
+    <!-- Попап для полноэкранного просмотра карточки из gallery -->
+    <div class="popup popup-gallery-element popup-full-screen-element"> 
+      <div class="card__image-full-container full-screen-element">
+        <img class="card__image-full full-screen-element__image" src="" alt="">
+        <h2 class="card__caption-full full-screen-element__caption"></h2>
+        <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
+      </div>
+    </div>
+
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -83,19 +92,11 @@
 
     <li class="gallery__element">
       <article class="card">
-        <img class="card__image" src="template.link" alt="template.name">
+        <img class="card__image" src="" alt="">
         <button class="card__delete" type="button" aria-label="Удалить"></button>
         <div class="card__caption-container">
-          <h2 class="card__caption">template.name</h2>
+          <h2 class="card__caption"></h2>
           <button class="card__like" type="button" aria-label="Нравится"></button>
-        </div>
-      </article>
-
-      <article class="popup popup-gallery-element">
-        <div class="card__image-full-container">
-          <img class="card__image-full" src="template.link" alt="template.name">
-          <h2 class="card__caption-full">template.name</h2>
-          <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
         </div>
       </article>
     </li>
@@ -103,8 +104,8 @@
   </template>
 
 
-  <script src="./script/initialCards.js"></script>
-  <script src="./script/script.js"></script>
+  <script src="./scripts.js/initialCards.js"></script>
+  <script src="./scripts.js/script.js"></script>
 </body>
 
 </html>
