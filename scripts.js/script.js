@@ -25,11 +25,11 @@ const cardTemplate = document.querySelector('.card-template').content; // нах
 //переменная galleryContainer - контейнер для карт
 const galleryContainer = document.querySelector('.gallery__photo-grid');
 
-// popup-full-screen-element
-const popupFullScreen = document.querySelector('.popup-full-screen-element'); //ищем popup-full-screen-element
-const buttonClosePopupFullScreen = popupFullScreen.querySelector('.popup__button-close');
-const fullScreenImage = popupFullScreen.querySelector('.full-screen-element__image');
-const fullScreenCaption = popupFullScreen.querySelector('.full-screen-element__caption');
+// popup_full-screen
+const popupFullScreen = document.querySelector('.popup_full-screen'); //ищем popup-full-screen
+const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__button-close');
+const fullScreenImage = popupFullScreen.querySelector('.full-screen__image');
+const fullScreenCaption = popupFullScreen.querySelector('.full-screen__caption');
 
 // ----- Функции ----- //
 // Функция создания новой карточки для галереи. Возвращает готовый для вставки galleryElement
@@ -123,7 +123,7 @@ buttonClosePopupAddGallery.addEventListener('click', () => { // ждем кли�
   popupAddGallery.classList.remove('popup_opened');
 });
 
-buttonClosePopupFullScreen.addEventListener('click', () => { // ждем клик по кнопке Х в popupFullScreen
+buttonCloseFullScreen.addEventListener('click', () => { // ждем клик по кнопке Х в popupFullScreen
   popupFullScreen.classList.remove('popup_opened');
 });
 
