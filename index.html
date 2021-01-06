@@ -35,12 +35,11 @@
 
         </ul>
       </section>
-    </main>
 
+    </main>
 
     <!-- Попап для формы редактирования profile -->
     <div class="popup popup-edit-profile">
-
       <form class="form form_edit-profile" name="form_edit-profile" method="get">
         <h2 class="form__title">Редактировать профиль</h2>
         <div class="form__inputs">
@@ -52,12 +51,10 @@
         <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
         <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
       </form>
-
     </div>
 
     <!-- Попап для формы добавления новой карточки в gallery -->
     <div class="popup popup-add-gallery">
-
       <form class="form form_add-gallery" name="form_add-gallery" method="get">
         <h2 class="form__title">Новое место</h2>
         <div class="form__inputs">
@@ -72,7 +69,7 @@
     </div>
 
     <!-- Попап для полноэкранного просмотра карточки из gallery -->
-    <div class="popup popup_full-screen"> 
+    <div class="popup popup_full-screen">
       <div class="full-screen">
         <img class="full-screen__image" src="src" alt="alt">
         <h2 class="full-screen__caption"></h2>
@@ -89,7 +86,6 @@
 
   <!-- Шаблон элемента галерии card -->
   <template class="card-template">
-
     <li class="gallery__element">
       <article class="card">
         <img class="card__image" src="src" alt="alt">
@@ -100,12 +96,11 @@
         </div>
       </article>
     </li>
-
   </template>
 
+  <script src="./scripts/initialCards.js"></script>
+  <script src="./scripts/script.js"></script>
 
-  <script src="./scripts.js/initialCards.js"></script>
-  <script src="./scripts.js/script.js"></script>
 </body>
 
 </html>
