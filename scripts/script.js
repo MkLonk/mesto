@@ -31,38 +31,51 @@ const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__button-clos
 const fullScreenImage = popupFullScreen.querySelector('.full-screen__image');
 const fullScreenCaption = popupFullScreen.querySelector('.full-screen__caption');
 
+
 // ----- Функции ----- //
-// Функция создания новой карточки для галереи. Возвращает готовый для вставки galleryElement
+// 1. Функция открытия попапов
+function openPopup(popupName) {
+  return popupName.classList.add('popup_opened');
+}
+
+// 2. Функция закрытия попапов
+function closePopup(popupName) {
+  return popupName.classList.remove('popup_opened');
+}
+
+// 3. Функция создания новой карточки для галереи. Возвращает готовый для вставки galleryElement
 function createCard(nameImage, linkImage) {
 
   const galleryElement = cardTemplate.cloneNode(true); // клонируем из шаблона
+  const cardImage = galleryElement.querySelector('.card__image');
+  const cardCaption = galleryElement.querySelector('.card__caption');
 
-  galleryElement.querySelector('.card__image').src = linkImage; // фото для миниатюры
-  galleryElement.querySelector('.card__image').alt = nameImage; // alt фото для миниатюры
-  galleryElement.querySelector('.card__caption').textContent = nameImage; // caption фото
-
+  cardImage.src = linkImage; // фото для миниатюры
+  cardImage.alt = nameImage; // alt фото для миниатюры
+  cardCaption.textContent = nameImage; // caption фото
 
   // вешаем слушатель на лайк
-  galleryElement.querySelector('.card__like').addEventListener('click', function (evt) {
-    const eventTarget = evt.target;
-    eventTarget.classList.toggle('card__like_active');
+  galleryElement.querySelector('.card__like').addEventListener('click', (evt) => {
+    evt.target.classList.toggle('card__like_active');
   });
 
   // вешаем слушатель на delete
-  galleryElement.querySelector('.card__delete').addEventListener('click', function (evt) {
-    const deleteElement = evt.target.closest('.gallery__element');
-    deleteElement.remove();
+  galleryElement.querySelector('.card__delete').addEventListener('click', (evt) => {
+    evt.target.closest('.gallery__element').remove();
   });
 
   // вешаем слушатель на клик по картинке card__image
-  galleryElement.querySelector('.card__image').addEventListener('click', function (evt) {
-    openPopupFullScreen(nameImage, linkImage)
+  galleryElement.querySelector('.card__image').addEventListener('click', () => {
+    fullScreenImage.src = linkImage;
+    fullScreenImage.alt = nameImage;
+    fullScreenCaption.textContent = nameImage;
+    openPopup(popupFullScreen);
   });
 
   return galleryElement;
 }
 
-// Функция вставки элемента (card) в начало или конец galleryContainer 
+// 4. Функция вставки элемента (card) в начало или конец galleryContainer 
 function addCard(card, insert = 'append') {
   if (insert === 'prepend') {
     galleryContainer.prepend(card);
@@ -71,30 +84,21 @@ function addCard(card, insert = 'append') {
   }
 }
 
-// Функция сохренения данных из form_edit-profile
+// 5. Функция сохренения данных из form_edit-profile
 function handleFormProfileSubmit(evt) {
   evt.preventDefault();
   userName.textContent = userNameInput.value; // сохраняем значение поля user-name-input на странице
   userJob.textContent = userJobInput.value; // сохраняем значение поля user-job-input на странице
-  popupEditProfile.classList.remove('popup_opened'); // закрываем popup после изменений
+  closePopup(popupEditProfile); // закрываем popup после изменений
 }
 
-// Функция сохренения данных из form_add-gallery
+// 6. Функция сохренения данных из form_add-gallery
 function handleFormGallerySubmit(evt) {
   evt.preventDefault();
-  addCard(createCard(mestoNameInput.value, mestoLinkInput.value), 'prepend');
-  popupAddGallery.classList.remove('popup_opened'); // закрываем popup Gallery после изменений
+  addCard(createCard(mestoNameInput.value, mestoLinkInput.value), 'prepend'); // создаем и добавляем карточку
+  closePopup(popupAddGallery); // закрываем popup после добавления карточки
 }
 
-// Функция открытия попапа PopupFullScreen, открывает кртинку nameImage, по ссылке linkImage 
-function openPopupFullScreen(nameImage, linkImage) {
-
-  fullScreenImage.src = linkImage;
-  fullScreenImage.alt = nameImage;
-  fullScreenCaption.textContent = nameImage;
-
-  popupFullScreen.classList.add('popup_opened');
-}
 
 // ----- Заполняем галерею ----- //
 initialCards.forEach(element => {
@@ -102,48 +106,44 @@ initialCards.forEach(element => {
   addCard(newCard);
 });
 
-// ----- Слушатели ----- //
+
 // --- Клики открывающие попапы с формами ---
-buttonEditProfile.addEventListener('click', () => { //ждем клик по кнопке button-edit
+//ждем клик по кнопке button-edit
+buttonEditProfile.addEventListener('click', () => {
   userNameInput.value = userName.textContent; // подставляем в поле user-input сохраненой имя пользователя
-  userJobInput.value = userJob.textContent; // подставляем в поле job-input сохраненую профессию пользователя
-  popupEditProfile.classList.add('popup_opened');
+  userJobInput.value = userJob.textContent; // подставляем в поле job-input сохраненую профессию пользователя  
+  openPopup(popupEditProfile);
 });
 
-buttonAddGallery.addEventListener('click', () => { // ждем клик по кнопке button-add
-  popupAddGallery.classList.add('popup_opened');
-});
+// ждем клик по кнопке button-add
+buttonAddGallery.addEventListener('click', () => openPopup(popupAddGallery));
+
 
 // --- Клики по кнопке Х ---
-buttonClosePopupEditProfile.addEventListener('click', () => { // ждем клик по кнопке Х в форме EditProfile
-  popupEditProfile.classList.remove('popup_opened'); 
-});
+// ждем клик по кнопке Х в форме EditProfile
+buttonClosePopupEditProfile.addEventListener('click', () => closePopup(popupEditProfile));
 
-buttonClosePopupAddGallery.addEventListener('click', () => { // ждем клик по кнопке Х в форме AddGallery
-  popupAddGallery.classList.remove('popup_opened');
-});
+// ждем клик по кнопке Х в форме AddGallery
+buttonClosePopupAddGallery.addEventListener('click', () => closePopup(popupAddGallery));
 
-buttonCloseFullScreen.addEventListener('click', () => { // ждем клик по кнопке Х в popupFullScreen
-  popupFullScreen.classList.remove('popup_opened');
-});
+// ждем клик по кнопке Х в popupFullScreen
+buttonCloseFullScreen.addEventListener('click', () => closePopup(popupFullScreen));
+
 
 // --- Клики за границы ---
-popupEditProfile.addEventListener('click', (evt) => { // ждем клик за границами формы EditProfile
-  if (evt.target === evt.currentTarget) {
-    popupEditProfile.classList.remove('popup_opened');
-  }
+// ждем клик за границами формы EditProfile
+popupEditProfile.addEventListener('click', (evt) => {
+  if (evt.target === evt.currentTarget) closePopup(popupEditProfile);
 });
 
-popupAddGallery.addEventListener('click', (evt) => { // ждем клик за границами формы AddGallery
-  if (evt.target === evt.currentTarget) {
-    popupAddGallery.classList.remove('popup_opened');
-  }
+// ждем клик за границами формы AddGallery
+popupAddGallery.addEventListener('click', (evt) => {
+  if (evt.target === evt.currentTarget) closePopup(popupAddGallery);
 });
 
-popupFullScreen.addEventListener('click', (evt) => { // ждем клик за границами popupFullScreen
-  if (evt.target === evt.currentTarget) {
-    popupFullScreen.classList.remove('popup_opened');
-  }
+// ждем клик за границами блока FullScreen
+popupFullScreen.addEventListener('click', (evt) => {
+  if (evt.target === evt.currentTarget) closePopup(popupFullScreen);
 });
 
 // --- Клики по кнопке Сохранить (отправить форму) ---
