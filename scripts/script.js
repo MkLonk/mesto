@@ -8,16 +8,16 @@ const userJob = profile.querySelector('.profile__user-job'); //находим us
 // ищем блок popup-edit-profile, и переменные для формы form_edit-profile
 const popupEditProfile = document.querySelector('.popup-edit-profile'); // находим блок "popup-edit-profile" в DOM
 const buttonClosePopupEditProfile = popupEditProfile.querySelector('.popup__button-close'); //находим кнопку button-close
-const formProfile = popupEditProfile.querySelector('.form_edit-profile'); // находим форму "form_edit-profile"
-const userNameInput = formProfile.querySelector('.form__input_user_name'); // находим поле form__input_user_name
-const userJobInput = formProfile.querySelector('.form__input_user_job'); // находим поле form__input_user_job 
+const formProfile = document.forms.formEditProfile; // находим форму "form_edit-profile"
+const userNameInput = formProfile.elements.userNameInput; // находим поле form__input_user_name
+const userJobInput = formProfile.elements.userJobInput; // находим поле form__input_user_job 
 
 // ищем блок popup-add-gallery, и переменные для формы form_add-gallery
 const popupAddGallery = document.querySelector('.popup-add-gallery'); // ищем блок "popup-add-gallery" в DOM
 const buttonClosePopupAddGallery = popupAddGallery.querySelector('.popup__button-close'); // находим кнопку button-close
-const formGallery = popupAddGallery.querySelector('.form_add-gallery'); // находим форму "form_add-gallery"
-const mestoNameInput = formGallery.querySelector('.form__input_mesto_name'); // находим поле form__input_mesto_name
-const mestoLinkInput = formGallery.querySelector('.form__input_mesto_link'); // находим поле form__input_mesto_link
+const formGallery = document.forms.formAddGallery; // находим форму "form_add-gallery"
+const mestoNameInput = formGallery.elements.mestoNameInput; // находим поле form__input_mesto_name
+const mestoLinkInput = formGallery.elements.mestoLinkInput; // находим поле form__input_mesto_link
 
 //переменная cardTemplate - блок шаблон card
 const cardTemplate = document.querySelector('.card-template').content; // находим блок-шаблон "card-template"
@@ -35,11 +35,19 @@ const fullScreenCaption = popupFullScreen.querySelector('.full-screen__caption')
 // ----- Функции ----- //
 // 1. Функция открытия попапов
 function openPopup(popupName) {
+
+  popupName.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popupName);
+    }
+  });
+
   return popupName.classList.add('popup_opened');
 }
 
 // 2. Функция закрытия попапов
 function closePopup(popupName) {
+
   return popupName.classList.remove('popup_opened');
 }
 
@@ -97,6 +105,10 @@ function handleFormGallerySubmit(evt) {
   evt.preventDefault();
   addCard(createCard(mestoNameInput.value, mestoLinkInput.value), 'prepend'); // создаем и добавляем карточку
   closePopup(popupAddGallery); // закрываем popup после добавления карточки
+
+  //сбрасываем значения в инпутах если форма была отправлена
+  mestoNameInput.value = '';
+  mestoLinkInput.value = '';
 }
 
 
@@ -107,18 +119,28 @@ initialCards.forEach(element => {
 });
 
 
-// --- Клики открывающие попапы с формами ---
+// --- События открывающие попапы с формами ---
 //ждем клик по кнопке button-edit
 buttonEditProfile.addEventListener('click', () => {
   userNameInput.value = userName.textContent; // подставляем в поле user-input сохраненой имя пользователя
   userJobInput.value = userJob.textContent; // подставляем в поле job-input сохраненую профессию пользователя  
   openPopup(popupEditProfile);
+
+
+  // убираем сообщения об ошибках в инпутах, так как при открытии попапа инпуты уже валидные
+  document.querySelector(`.${userNameInput.id}_error`).textContent = '';
+  document.querySelector(`.${userJobInput.id}_error`).textContent = '';
+
+
+  // убираем оформления инпутов, так как при открытии попапа инпуты уже валидные
+  userNameInput.classList.remove('form__input_type_error');
+  userJobInput.classList.remove('form__input_type_error');
 });
 
 // ждем клик по кнопке button-add
 buttonAddGallery.addEventListener('click', () => openPopup(popupAddGallery));
 
-
+// --- События закрывыющие попапы ---
 // --- Клики по кнопке Х ---
 // ждем клик по кнопке Х в форме EditProfile
 buttonClosePopupEditProfile.addEventListener('click', () => closePopup(popupEditProfile));
@@ -128,6 +150,10 @@ buttonClosePopupAddGallery.addEventListener('click', () => closePopup(popupAddGa
 
 // ждем клик по кнопке Х в popupFullScreen
 buttonCloseFullScreen.addEventListener('click', () => closePopup(popupFullScreen));
+
+// ждем нажание на клавиатуре кнопки Esc в popupFullScreen
+
+
 
 
 // --- Клики за границы ---
