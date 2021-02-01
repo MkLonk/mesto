@@ -128,8 +128,8 @@ buttonEditProfile.addEventListener('click', () => {
 
 
   // убираем сообщения об ошибках в инпутах, так как при открытии попапа инпуты уже валидные
-  document.querySelector(`.${userNameInput.id}_error`).textContent = '';
-  document.querySelector(`.${userJobInput.id}_error`).textContent = '';
+  document.querySelector(`#${userNameInput.id}-error`).textContent = '';
+  document.querySelector(`#${userJobInput.id}-error`).textContent = '';
 
 
   // убираем оформления инпутов, так как при открытии попапа инпуты уже валидные
