@@ -40,30 +40,48 @@
 
     <!-- Попап для формы редактирования profile -->
     <div class="popup popup-edit-profile">
-      <form class="form form_edit-profile" name="form_edit-profile" method="get">
+      <form class="form form_edit-profile" name="formEditProfile" method="get" novalidate>
         <h2 class="form__title">Редактировать профиль</h2>
         <div class="form__inputs">
-          <input class="form__input form__input_user_name" type="text" name="userNameInput" placeholder="Ваше имя?"
-            required>
-          <input class="form__input form__input_user_job" type="text" name="userJobInput" placeholder="Чем занимаетесь?"
-            required>
+
+          <div class="form__input-element">
+            <input class="form__input" id="user-name_input" type="text" name="userNameInput" placeholder="Ваше имя?"
+              minlength="2" maxlength="40" required>
+            <span class="form__input-error user-name_input_error"></span>
+          </div>
+
+          <div class="form__input-element">
+            <input class="form__input" id="user-job_input" type="text" name="userJobInput"
+              placeholder="Чем занимаетесь?" minlength="2" maxlength="200" required>
+            <span class="form__input-error user-job_input_error"></span>
+          </div>
+
         </div>
-        <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
+        <button class="form__button-save" type="submit" value="Сохранить" disabled>Сохранить</button>
         <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
       </form>
     </div>
 
     <!-- Попап для формы добавления новой карточки в gallery -->
     <div class="popup popup-add-gallery">
-      <form class="form form_add-gallery" name="form_add-gallery" method="get">
+      <form class="form form_add-gallery" name="formAddGallery" method="get" novalidate>
         <h2 class="form__title">Новое место</h2>
         <div class="form__inputs">
-          <input class="form__input form__input_mesto_name" type="text" name="mestoNameInput" placeholder="Название"
-            required>
-          <input class="form__input form__input_mesto_link" type="text" name="mestoLinkInput"
-            placeholder="Ссылка на картинку" required>
+
+          <div class="form__input-element">
+            <input class="form__input" id="mesto-name_input" type="text" name="mestoNameInput" placeholder="Название"
+              minlength="2" maxlength="30" required>
+            <span class="form__input-error mesto-name_input_error"></span>
+          </div>
+
+          <div class="form__input-element">
+            <input class="form__input" id="mesto-link_input" type="url" name="mestoLinkInput"
+              placeholder="Ссылка на картинку" required>
+            <span class="form__input-error mesto-link_input_error"></span>
+          </div>
+
         </div>
-        <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
+        <button class="form__button-save" type="submit" value="Сохранить" disabled>Сохранить</button>
         <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
       </form>
     </div>
@@ -71,7 +89,7 @@
     <!-- Попап для полноэкранного просмотра карточки из gallery -->
     <div class="popup popup_full-screen">
       <div class="full-screen">
-        <img class="full-screen__image" src="src" alt="alt">
+        <img class="full-screen__image" src="" alt="alt">
         <h2 class="full-screen__caption"></h2>
         <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
       </div>
@@ -100,6 +118,7 @@
 
   <script src="./scripts/initialCards.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/validate.js"></script>
 
 </body>
 
