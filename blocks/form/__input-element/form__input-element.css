@@ -1,0 +1,7 @@
+.form__input-element {
+  margin-bottom: 5px;
+}
+
+.form__input-element:last-child {
+  margin-bottom: 27px;
+}
