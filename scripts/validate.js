@@ -3,15 +3,15 @@ const settingsForm = {
   formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__button-save',
-  inactiveButtonClass: 'form__button_inactive', // селектор не активной кнопки
-  inputErrorClass: 'form__input_type_error', // селектор инпута с ошибкой
-  errorClassSuffix: '_error' //селектор сообщения
+  inactiveButtonClass: 'form__button_inactive', // клас для делающий кнопку не активной
+  inputErrorClass: 'form__input_type_error', // класс добавляемый если инпут с ошибкой
+  errorClassSuffix: '-error' //id сообщения c ошибкой
 }
 
 
 // функция показа сообщения об ошибке в инпуте
 const showInputError = (formElement, inputElement, errorMessage, objSettingForm) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id + objSettingForm.errorClassSuffix}`);
+  const errorElement = formElement.querySelector(`#${inputElement.id + objSettingForm.errorClassSuffix}`);
   errorElement.textContent = errorMessage;
 
   inputElement.classList.add(objSettingForm.inputErrorClass);
@@ -20,7 +20,7 @@ const showInputError = (formElement, inputElement, errorMessage, objSettingForm)
 
 // функция скрытия сообщения об ошибке в инпуте
 const hideInputError = (formElement, inputElement, objSettingForm) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id + objSettingForm.errorClassSuffix}`);
+  const errorElement = formElement.querySelector(`#${inputElement.id + objSettingForm.errorClassSuffix}`);
   errorElement.textContent = '';
 
   inputElement.classList.remove(objSettingForm.inputErrorClass);
