@@ -37,6 +37,12 @@ const fullScreenCaption = popupFullScreen.querySelector('.full-screen__caption')
 function openPopup(popupName) {
   popupName.classList.add('popup_opened');
   addEventPressKey('Escape', popupName);
+
+  // проверяем инпуты и переключаем активность кнопки
+  const inputList = Array.from(popupName.querySelectorAll('.form__input'))
+  const buttonElement = popupName.querySelector('.form__button-save')
+  toggleButtonState (inputList, buttonElement, settingsForm);
+
 }
 
 // 2. Функция закрытия попапов
@@ -103,10 +109,6 @@ function handleFormGallerySubmit(evt) {
   //сбрасываем значения в инпутах если форма была отправлена
   mestoNameInput.value = '';
   mestoLinkInput.value = '';
-
-  const inputList = [mestoNameInput, mestoNameInput]; // собираем массив инпутов
-  const buttonElement = evt.submitter; // кнопка отправляющая форму
-  toggleButtonState (inputList, buttonElement, settingsForm);
 }
 
 // 7. Функция добавления слушателя для закрытия попапа при клике клавиши
