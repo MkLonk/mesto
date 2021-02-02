@@ -5,13 +5,13 @@ const settingsForm = {
   submitButtonSelector: '.form__button-save',
   inactiveButtonClass: 'form__button_inactive', // клас для делающий кнопку не активной
   inputErrorClass: 'form__input_type_error', // класс добавляемый если инпут с ошибкой
-  errorClassSuffix: '-error' //id сообщения c ошибкой
+  errorClassSuffix: 'error' //id сообщения c ошибкой
 }
 
 
 // функция показа сообщения об ошибке в инпуте
 const showInputError = (formElement, inputElement, errorMessage, objSettingForm) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id + objSettingForm.errorClassSuffix}`);
+  const errorElement = formElement.querySelector(`#${inputElement.id}-${objSettingForm.errorClassSuffix}`);
   errorElement.textContent = errorMessage;
 
   inputElement.classList.add(objSettingForm.inputErrorClass);
@@ -20,7 +20,7 @@ const showInputError = (formElement, inputElement, errorMessage, objSettingForm)
 
 // функция скрытия сообщения об ошибке в инпуте
 const hideInputError = (formElement, inputElement, objSettingForm) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id + objSettingForm.errorClassSuffix}`);
+  const errorElement = formElement.querySelector(`#${inputElement.id}-${objSettingForm.errorClassSuffix}`);
   errorElement.textContent = '';
 
   inputElement.classList.remove(objSettingForm.inputErrorClass);
@@ -65,7 +65,6 @@ const setEventListeners = (formElement, objSettingForm) => {
 
   const inputList = Array.from(formElement.querySelectorAll(objSettingForm.inputSelector)); //собираем массив инпутов
   const buttonElement = formElement.querySelector(objSettingForm.submitButtonSelector); // ищем сабмит в форме
-  toggleButtonState(inputList, buttonElement, objSettingForm); // переключаем активность кнопки
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {

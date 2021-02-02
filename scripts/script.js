@@ -35,20 +35,14 @@ const fullScreenCaption = popupFullScreen.querySelector('.full-screen__caption')
 // ----- Функции ----- //
 // 1. Функция открытия попапов
 function openPopup(popupName) {
-
-  popupName.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closePopup(popupName);
-    }
-  });
-
-  return popupName.classList.add('popup_opened');
+  popupName.classList.add('popup_opened');
+  addEventPressKey('Escape', popupName);
 }
 
 // 2. Функция закрытия попапов
 function closePopup(popupName) {
-
-  return popupName.classList.remove('popup_opened');
+  popupName.classList.remove('popup_opened');
+  removeEventPressKey('Escape', popupName);
 }
 
 // 3. Функция создания новой карточки для галереи. Возвращает готовый для вставки galleryElement
@@ -109,7 +103,32 @@ function handleFormGallerySubmit(evt) {
   //сбрасываем значения в инпутах если форма была отправлена
   mestoNameInput.value = '';
   mestoLinkInput.value = '';
+
+  const inputList = [mestoNameInput, mestoNameInput]; // собираем массив инпутов
+  const buttonElement = evt.submitter; // кнопка отправляющая форму
+  toggleButtonState (inputList, buttonElement, settingsForm);
 }
+
+// 7. Функция добавления слушателя для закрытия попапа при клике клавиши
+function addEventPressKey(key, popupName) {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === key) {
+      closePopup(popupName);
+    }
+  });
+}
+
+// 8. Функция удаления слушателя после закрытия попапа при клике клавиши
+function removeEventPressKey(key, popupName) {
+  document.removeEventListener('keydown', (evt) => {
+    if (evt.key === key) {
+      closePopup(popupName);
+    }
+  });
+}
+
+
+// *** *** *** *** //
 
 
 // ----- Заполняем галерею ----- //
@@ -123,9 +142,9 @@ initialCards.forEach(element => {
 //ждем клик по кнопке button-edit
 buttonEditProfile.addEventListener('click', () => {
   userNameInput.value = userName.textContent; // подставляем в поле user-input сохраненой имя пользователя
-  userJobInput.value = userJob.textContent; // подставляем в поле job-input сохраненую профессию пользователя  
-  openPopup(popupEditProfile);
+  userJobInput.value = userJob.textContent; // подставляем в поле job-input сохраненую профессию пользователя
 
+  openPopup(popupEditProfile);
 
   // убираем сообщения об ошибках в инпутах, так как при открытии попапа инпуты уже валидные
   document.querySelector(`#${userNameInput.id}-error`).textContent = '';
@@ -138,7 +157,9 @@ buttonEditProfile.addEventListener('click', () => {
 });
 
 // ждем клик по кнопке button-add
-buttonAddGallery.addEventListener('click', () => openPopup(popupAddGallery));
+buttonAddGallery.addEventListener('click', () => {
+  openPopup(popupAddGallery);
+});
 
 // --- События закрывыющие попапы ---
 // --- Клики по кнопке Х ---
