@@ -36,19 +36,20 @@ const fullScreenCaption = popupFullScreen.querySelector('.full-screen__caption')
 // 1. Функция открытия попапов
 function openPopup(popupName) {
   popupName.classList.add('popup_opened');
-  addEventPressKey('Escape', popupName);
+  document.addEventListener('keyup', handleEscUp); // добавляем событие "Ожидание клавиши Esc"
 
   // проверяем инпуты и переключаем активность кнопки
   const inputList = Array.from(popupName.querySelectorAll('.form__input'))
   const buttonElement = popupName.querySelector('.form__button-save')
-  toggleButtonState (inputList, buttonElement, settingsForm);
-
+  if (buttonElement) { // проверяем есть ли buttonElement
+    toggleButtonState(inputList, buttonElement, settingsForm);
+  }
 }
 
 // 2. Функция закрытия попапов
 function closePopup(popupName) {
   popupName.classList.remove('popup_opened');
-  removeEventPressKey('Escape', popupName);
+  document.removeEventListener('keyup', handleEscUp); // удаляем событие "Ожидание клавиши Esc"
 }
 
 // 3. Функция создания новой карточки для галереи. Возвращает готовый для вставки galleryElement
@@ -111,22 +112,14 @@ function handleFormGallerySubmit(evt) {
   mestoLinkInput.value = '';
 }
 
-// 7. Функция добавления слушателя для закрытия попапа при клике клавиши
-function addEventPressKey(key, popupName) {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === key) {
-      closePopup(popupName);
-    }
-  });
-}
+// 7. Функция вызывающая closePopup на открытом попапе при нажатии Escape
+function handleEscUp(evt) {
+  evt.preventDefault();
+  const openedPopup = document.querySelector('.popup_opened'); // ищем открытый попап в document
 
-// 8. Функция удаления слушателя после закрытия попапа при клике клавиши
-function removeEventPressKey(key, popupName) {
-  document.removeEventListener('keydown', (evt) => {
-    if (evt.key === key) {
-      closePopup(popupName);
-    }
-  });
+  if (evt.key === 'Escape') {
+    closePopup(openedPopup);
+  }
 }
 
 
