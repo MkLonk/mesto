@@ -1,0 +1,30 @@
+.header__logo {
+  background-image: url(../../../images/logo.svg);
+  width: 142px;
+  height: 33px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Реализуем плавное наростение паддинга слева от лого*/
+
+@media screen and (max-width: 918px) {
+  .header__logo {
+    margin-left: calc((100vw - 918px)*-1);
+  }
+}
+
+/* Фиксируем паддинг слева от лого*/
+
+@media screen and (max-width: 891px) {
+  .header__logo {
+    margin-left: 27px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header__logo {
+    width: 104px;
+    height: 25px;
+  }
+}

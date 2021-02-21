@@ -1,0 +1,28 @@
+.form__input {
+  border: 0;
+  width: calc(100% - 12px);
+  /* margin-bottom: 27px; */
+  padding: 6px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 27px;
+  font-family: inherit;
+}
+
+/* .form__input:last-child {
+  margin-bottom: 48px;
+} */
+
+@media screen and (max-width: 560px) {
+  .form__input {
+    padding: 6px;
+    margin-bottom: 27px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+/*   .form__input:last-child {
+    margin-bottom: 45px;
+  } */
+}

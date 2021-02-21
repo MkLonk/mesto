@@ -1,0 +1,34 @@
+.gallery__photo-grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 17px;
+  row-gap: 20px;
+  justify-items: center;
+}
+
+@media screen and (max-width: 918px) {
+  .gallery__photo-grid {
+    padding: 0 calc((100vw - 918px)*-1);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+}
+
+/* Фиксируем паддинг*/
+
+@media screen and (max-width: 899px) {
+  .gallery__photo-grid {
+    padding: 0 19px;
+  }
+}
+
+@media screen and (max-width: 636px) {
+  .gallery__photo-grid {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+}

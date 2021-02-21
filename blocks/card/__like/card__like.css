@@ -1,0 +1,27 @@
+.card__like {
+  width: 21px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  cursor: pointer;
+  align-self: center;
+  background-image: url(../../../images/gallery__like.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.card__like:hover {
+  opacity: 0.5;
+  padding: 0;
+}
+
+.card__like:active {
+  opacity: 1;
+  background-image: url(../../../images/gallery__like-active.svg);
+  padding: 0;
+  transition: opacity 0.4s ease-in-out;
+}
