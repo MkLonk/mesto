@@ -1,77 +1,134 @@
-const initialCards = [
-  {
-    name: 'FhАрхыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+export class Card {
+
+  // переменные с данными
+  _dataLinkImage;
+  _dataTitleImage;
+
+  // переменные со значениями селекторов (ячейки для данных)
+  _template; // шаблон
+  _galleryElement; // готовый элемент галереи
+  _image; // ячейка картинки
+  _title; // ячейка названия картинки
+  _buttonLike; // кнопка лайк
+  _buttonDelete; // кнопка корзина
+  _buttonLikeActive; // модификатор активного лайка 
+  _popupFullScreen; // попап полноэкранной картинки
+  _buttonCloseFullScreen; // кнопка закрытия полноэкранной картинки
+  _imageFullScreen; // ячейка полноэкранной картинки
+  _titleFullScreen; // ячейка названия полноэкранной картинки
+  _galleryContainer; // ячейка куда добавляются все готовые элементы _galleryElement
+
+  constructor(data, settingsCard) {
+    this._dataLinkImage = data.link;
+    this._dataTitleImage = data.name;
+
+    this._template = document.querySelector(settingsCard.selectorTemplate).content;
+    this._galleryElement = settingsCard.selectorGalleryElement;
+    this._image = settingsCard.selectorImage;
+    this._title = settingsCard.selectorTitle;
+    this._buttonLike = settingsCard.selectorButtonLike;
+    this._buttonDelete = settingsCard.selectorButtonDelete;
+    this._buttonLikeActive = settingsCard.selectorButtonLikeActive;
+    this._popupFullScreen = document.querySelector(settingsCard.selectorPopupFullScreen);
+    this._buttonCloseFullScreen = settingsCard.selectorButtonCloseFullScreen;
+    this._imageFullScreen = settingsCard.selectorImageFullScreen;
+    this._titleFullScreen = settingsCard.selectorTitleFullScreen;
+    this._galleryContainer = settingsCard.selectorGalleryContainer;
   }
-]
 
+  _openPopup() {
+    this._popupFullScreen.classList.add('popup_opened');
 
-class Card {
-  
-  _template
-  
-  _linkImage
-  _nameImage
-
-  constructor(data, selector) {
-    this._template = document.querySelector(selector).content; // находим блок-шаблон по селектору
-    this._linkImage = data.link;
-    this._nameImage = data.name;
+    this._handleEscAdd();
+    this._missClick();
   }
 
-  _createCard() {
+  _closePopup() {
+    this._popupFullScreen.classList.remove('popup_opened');
+    
+    this._handleEscRemove();
+  }
 
-    const galleryElement = this._template.cloneNode(true); // клонируем из шаблона
-    const cardImage = galleryElement.querySelector('.card__image')
-    const cardCaption = galleryElement.querySelector('.card__caption')
+  _handleEscAdd() {
+    document.addEventListener('keyup', (evt) => {
+      evt.preventDefault();
+      if (evt.key === 'Escape') {
+        this._closePopup();
+      };
+    });
+  };
 
-    cardImage.src = this._linkImage; // фото для миниатюры
-    cardImage.alt = this._nameImage; // alt фото для миниатюры
-    cardCaption.textContent = this._nameImage; // caption фото
+  _handleEscRemove() {
+    document.removeEventListener('keyup', (evt) => {
+      evt.preventDefault();
+      if (evt.key === 'Escape') {
+        this._closePopup();
+      };
+    });
+  };
+
+  _missClick() {
+    this._popupFullScreen.addEventListener('click', (evt) => {
+      if (evt.target === evt.currentTarget) this._closePopup();
+    });
+  }
+
+  _clickClose(clickElement) { // клик по лайку
+    clickElement.querySelector(this._buttonCloseFullScreen).addEventListener('click', () => this._closePopup());
+  }
+
+  _clickLike(clickElement) { // клик по лайку
+    clickElement.querySelector(this._buttonLike).addEventListener('click', (evt) => {
+      evt.target.classList.toggle(this._buttonLikeActive);
+    });
+  }
+
+  _clickDelete(clickElement) { // клик по корзине
+    clickElement.querySelector(this._buttonDelete).addEventListener('click', (evt) => {
+      evt.target.closest(this._galleryElement).remove();
+    });
+
+  }
+
+  _clickImage(clickElement) { // клик по картинке
+
+    clickElement.querySelector(this._image).addEventListener('click', () => {
+      // перед открытием заполняем попап popupFullScreen данными 
+      this._popupFullScreen.querySelector(this._imageFullScreen).src = this._dataLinkImage;
+      this._popupFullScreen.querySelector(this._imageFullScreen).alt = this._dataTitleImage;
+      this._popupFullScreen.querySelector(this._titleFullScreen).textContent = this._dataTitleImage;
+
+      // открываем готовый попап
+      this._openPopup();
+      this._clickClose(this._popupFullScreen);
+    });
+  }
+
+  _createCard() { // создаем новую карточку
+
+    const galleryElement = this._template.cloneNode(true); // клонируем html из шаблона (this._template)
+
+    galleryElement.querySelector(this._image).src = this._dataLinkImage; // link на фото
+    galleryElement.querySelector(this._image).alt = this._dataTitleImage; // alt фото
+    galleryElement.querySelector(this._title).textContent = this._dataTitleImage; // caption фото
+
+    // методы необходимые новой карточке 
+    this._clickLike(galleryElement);
+    this._clickDelete(galleryElement);
+    this._clickImage(galleryElement);
 
     return galleryElement;
   }
+
+  
+  generateCard(insert = 'down') { // генерируем и добавляем новую карту вначало или конец галереи
+    if (insert == 'up') {
+      return document.querySelector(this._galleryContainer).
+        prepend(this._createCard());
+
+    } else {
+      return document.querySelector(this._galleryContainer).
+        append(this._createCard());
+    }
+  };
 };
-
-const newMyCard = new Card(initialCards[0], '.card-template');
-
-console.log(newMyCard._createCard());
-
-
-
-// 3. Функция создания новой карточки для галереи. Возвращает готовый для вставки galleryElement
-function createCard(nameImage, linkImage) {
-
-  const galleryElement = cardTemplate.cloneNode(true); // клонируем из шаблона
-  const cardImage = galleryElement.querySelector('.card__image');
-  const cardCaption = galleryElement.querySelector('.card__caption');
-
-  cardImage.src = linkImage; // фото для миниатюры
-  cardImage.alt = nameImage; // alt фото для миниатюры
-  cardCaption.textContent = nameImage; // caption фото
-
-  // вешаем слушатель на лайк
-  galleryElement.querySelector('.card__like').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('card__like_active');
-  });
-
-  // вешаем слушатель на delete
-  galleryElement.querySelector('.card__delete').addEventListener('click', (evt) => {
-    evt.target.closest('.gallery__element').remove();
-  });
-
-  // вешаем слушатель на клик по картинке card__image
-  galleryElement.querySelector('.card__image').addEventListener('click', () => {
-    fullScreenImage.src = linkImage;
-    fullScreenImage.alt = nameImage;
-    fullScreenCaption.textContent = nameImage;
-    openPopup(popupFullScreen);
-  });
-
-  return galleryElement;
-}
-
-
-const charName = 'Vlad';
-
-export { charName };

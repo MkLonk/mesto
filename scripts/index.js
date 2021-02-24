@@ -1,6 +1,10 @@
-import { charName } from './Card.js';
+import { Card } from './Card.js'
+import { settingsCard } from './settingsCard.js'
 
-console.log(charName);
+import { FormValidator } from './FormValidator.js'
+import { settingsFormValid } from './settingsFormValid.js';
+
+import { dataCards } from './dataCards.js'
 
 //переменные блока profile
 const profile = document.querySelector('.profile'); //находим блок "profile" в DOM
@@ -23,18 +27,6 @@ const formGallery = document.forms.formAddGallery; // находим форму 
 const mestoNameInput = formGallery.elements.mestoNameInput; // находим поле form__input_mesto_name
 const mestoLinkInput = formGallery.elements.mestoLinkInput; // находим поле form__input_mesto_link
 
-//переменная cardTemplate - блок шаблон card
-const cardTemplate = document.querySelector('.card-template').content; // находим блок-шаблон "card-template"
-
-//переменная galleryContainer - контейнер для карт
-const galleryContainer = document.querySelector('.gallery__photo-grid');
-
-// popup_full-screen
-const popupFullScreen = document.querySelector('.popup_full-screen'); //ищем popup-full-screen
-const buttonCloseFullScreen = popupFullScreen.querySelector('.popup__button-close');
-const fullScreenImage = popupFullScreen.querySelector('.full-screen__image');
-const fullScreenCaption = popupFullScreen.querySelector('.full-screen__caption');
-
 
 // ----- Функции ----- //
 // 1. Функция открытия попапов
@@ -42,12 +34,9 @@ function openPopup(popupName) {
   popupName.classList.add('popup_opened');
   document.addEventListener('keyup', handleEscUp); // добавляем событие "Ожидание клавиши Esc"
 
-  // проверяем инпуты и переключаем активность кнопки
-  const inputList = Array.from(popupName.querySelectorAll('.form__input'))
-  const buttonElement = popupName.querySelector('.form__button-save')
-  if (buttonElement) { // проверяем есть ли buttonElement
-    toggleButtonState(inputList, buttonElement, settingsForm);
-  }
+  const openForm = popupName.querySelector('.form');
+  const formValid = new FormValidator(openForm, settingsFormValid);
+  formValid.enableValidation();
 }
 
 // 2. Функция закрытия попапов
@@ -56,52 +45,7 @@ function closePopup(popupName) {
   document.removeEventListener('keyup', handleEscUp); // удаляем событие "Ожидание клавиши Esc"
 }
 
-
-
-// 3. Функция создания новой карточки для галереи. Возвращает готовый для вставки galleryElement
-function createCard(nameImage, linkImage) {
-
-  const galleryElement = cardTemplate.cloneNode(true); // клонируем из шаблона
-  const cardImage = galleryElement.querySelector('.card__image');
-  const cardCaption = galleryElement.querySelector('.card__caption');
-
-  cardImage.src = linkImage; // фото для миниатюры
-  cardImage.alt = nameImage; // alt фото для миниатюры
-  cardCaption.textContent = nameImage; // caption фото
-
-  // вешаем слушатель на лайк
-  galleryElement.querySelector('.card__like').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('card__like_active');
-  });
-
-  // вешаем слушатель на delete
-  galleryElement.querySelector('.card__delete').addEventListener('click', (evt) => {
-    evt.target.closest('.gallery__element').remove();
-  });
-
-  // вешаем слушатель на клик по картинке card__image
-  galleryElement.querySelector('.card__image').addEventListener('click', () => {
-    fullScreenImage.src = linkImage;
-    fullScreenImage.alt = nameImage;
-    fullScreenCaption.textContent = nameImage;
-    openPopup(popupFullScreen);
-  });
-
-  return galleryElement;
-}
-
-
-
-// 4. Функция вставки элемента (card) в начало или конец galleryContainer 
-function addCard(card, insert = 'append') {
-  if (insert === 'prepend') {
-    galleryContainer.prepend(card);
-  } else {
-    galleryContainer.append(card);
-  }
-}
-
-// 5. Функция сохренения данных из form_edit-profile
+// 3. Функция сохренения данных из form_edit-profile
 function handleFormProfileSubmit(evt) {
   evt.preventDefault();
   userName.textContent = userNameInput.value; // сохраняем значение поля user-name-input на странице
@@ -109,18 +53,25 @@ function handleFormProfileSubmit(evt) {
   closePopup(popupEditProfile); // закрываем popup после изменений
 }
 
-// 6. Функция сохренения данных из form_add-gallery
+// 4. Функция сохренения данных из form_add-gallery
 function handleFormGallerySubmit(evt) {
   evt.preventDefault();
-  addCard(createCard(mestoNameInput.value, mestoLinkInput.value), 'prepend'); // создаем и добавляем карточку
-  closePopup(popupAddGallery); // закрываем popup после добавления карточки
 
-  //сбрасываем значения в инпутах если форма была отправлена
+  const newCardData = { // собираем объект с данными о новом месте
+    name: mestoNameInput.value,
+    link: mestoLinkInput.value,
+  }
+
+  const newCard = new Card(newCardData, settingsCard); // создаем новый Card 
+  newCard.generateCard('up'); // встяем его в начало галерии
+
+  //сбрасываем значения и закрываем форму
   mestoNameInput.value = '';
   mestoLinkInput.value = '';
+  closePopup(popupAddGallery);
 }
 
-// 7. Функция вызывающая closePopup на открытом попапе при нажатии Escape
+// 5. Функция вызывающая closePopup на открытом попапе при нажатии Escape
 function handleEscUp(evt) {
   evt.preventDefault();
   const openedPopup = document.querySelector('.popup_opened'); // ищем открытый попап в document
@@ -130,16 +81,13 @@ function handleEscUp(evt) {
   }
 }
 
-
 // *** *** *** *** //
 
-
 // ----- Заполняем галерею ----- //
-initialCards.forEach(element => {
-  const newCard = createCard(element.name, element.link);
-  addCard(newCard);
+dataCards.forEach(element => {
+  const card = new Card(element, settingsCard);
+  card.generateCard();
 });
-
 
 // --- События открывающие попапы с формами ---
 //ждем клик по кнопке button-edit
@@ -148,15 +96,6 @@ buttonEditProfile.addEventListener('click', () => {
   userJobInput.value = userJob.textContent; // подставляем в поле job-input сохраненую профессию пользователя
 
   openPopup(popupEditProfile);
-
-  // убираем сообщения об ошибках в инпутах, так как при открытии попапа инпуты уже валидные
-  document.querySelector(`#${userNameInput.id}-error`).textContent = '';
-  document.querySelector(`#${userJobInput.id}-error`).textContent = '';
-
-
-  // убираем оформления инпутов, так как при открытии попапа инпуты уже валидные
-  userNameInput.classList.remove('form__input_type_error');
-  userJobInput.classList.remove('form__input_type_error');
 });
 
 // ждем клик по кнопке button-add
@@ -165,22 +104,12 @@ buttonAddGallery.addEventListener('click', () => {
 });
 
 // --- События закрывыющие попапы ---
-// --- Клики по кнопке Х ---
 // ждем клик по кнопке Х в форме EditProfile
 buttonClosePopupEditProfile.addEventListener('click', () => closePopup(popupEditProfile));
 
 // ждем клик по кнопке Х в форме AddGallery
 buttonClosePopupAddGallery.addEventListener('click', () => closePopup(popupAddGallery));
 
-// ждем клик по кнопке Х в popupFullScreen
-buttonCloseFullScreen.addEventListener('click', () => closePopup(popupFullScreen));
-
-// ждем нажание на клавиатуре кнопки Esc в popupFullScreen
-
-
-
-
-// --- Клики за границы ---
 // ждем клик за границами формы EditProfile
 popupEditProfile.addEventListener('click', (evt) => {
   if (evt.target === evt.currentTarget) closePopup(popupEditProfile);
@@ -189,11 +118,6 @@ popupEditProfile.addEventListener('click', (evt) => {
 // ждем клик за границами формы AddGallery
 popupAddGallery.addEventListener('click', (evt) => {
   if (evt.target === evt.currentTarget) closePopup(popupAddGallery);
-});
-
-// ждем клик за границами блока FullScreen
-popupFullScreen.addEventListener('click', (evt) => {
-  if (evt.target === evt.currentTarget) closePopup(popupFullScreen);
 });
 
 // --- Клики по кнопке Сохранить (отправить форму) ---
