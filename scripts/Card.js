@@ -1,106 +1,82 @@
+import { hotKeys } from './hotKeys.js';
 export class Card {
 
   // переменные с данными
   _dataLinkImage;
   _dataTitleImage;
 
-  // переменные со значениями селекторов (ячейки для данных)
   _template; // шаблон
-  _galleryElement; // готовый элемент галереи
-  _image; // ячейка картинки
-  _title; // ячейка названия картинки
-  _buttonLike; // кнопка лайк
-  _buttonDelete; // кнопка корзина
-  _buttonLikeActive; // модификатор активного лайка 
   _popupFullScreen; // попап полноэкранной картинки
-  _buttonCloseFullScreen; // кнопка закрытия полноэкранной картинки
-  _imageFullScreen; // ячейка полноэкранной картинки
-  _titleFullScreen; // ячейка названия полноэкранной картинки
-  _galleryContainer; // ячейка куда добавляются все готовые элементы _galleryElement
+  _esc = hotKeys.esc;
 
-  constructor(data, settingsCard) {
+  constructor(data, selectorTemplate) {
     this._dataLinkImage = data.link;
     this._dataTitleImage = data.name;
 
-    this._template = document.querySelector(settingsCard.selectorTemplate).content;
-    this._galleryElement = settingsCard.selectorGalleryElement;
-    this._image = settingsCard.selectorImage;
-    this._title = settingsCard.selectorTitle;
-    this._buttonLike = settingsCard.selectorButtonLike;
-    this._buttonDelete = settingsCard.selectorButtonDelete;
-    this._buttonLikeActive = settingsCard.selectorButtonLikeActive;
-    this._popupFullScreen = document.querySelector(settingsCard.selectorPopupFullScreen);
-    this._buttonCloseFullScreen = settingsCard.selectorButtonCloseFullScreen;
-    this._imageFullScreen = settingsCard.selectorImageFullScreen;
-    this._titleFullScreen = settingsCard.selectorTitleFullScreen;
-    this._galleryContainer = settingsCard.selectorGalleryContainer;
+    this._template = document.querySelector(selectorTemplate).content;
+    this._popupFullScreen = document.querySelector('.popup_full-screen');
   }
 
   _openPopup() {
     this._popupFullScreen.classList.add('popup_opened');
 
-    this._handleEscAdd();
-    this._missClick();
+    this._clickClose(this._popupFullScreen); // ждем клик по кнопке 'закрыть'
+    this._missClick(this._popupFullScreen); // ждем клик мимо картинки
+    this._handleEscUp() // ждем нажание клавиши Esc
   }
 
   _closePopup() {
     this._popupFullScreen.classList.remove('popup_opened');
-    
-    this._handleEscRemove();
   }
 
-  _handleEscAdd() {
-    document.addEventListener('keyup', (evt) => {
-      evt.preventDefault();
-      if (evt.key === 'Escape') {
-        this._closePopup();
-      };
-    });
-  };
+  _handleEscUp() {
 
-  _handleEscRemove() {
-    document.removeEventListener('keyup', (evt) => {
-      evt.preventDefault();
-      if (evt.key === 'Escape') {
-        this._closePopup();
-      };
-    });
-  };
+    const _eventEsc = (evt) => {
 
-  _missClick() {
-    this._popupFullScreen.addEventListener('click', (evt) => {
+      evt.preventDefault();
+
+      if (evt.key === this._esc) {
+        this._closePopup()
+        document.removeEventListener('keyup', _eventEsc);
+      }
+    }
+    document.addEventListener('keyup', _eventEsc);
+  }
+
+  _missClick(missElement) {
+    missElement.addEventListener('click', (evt) => {
       if (evt.target === evt.currentTarget) this._closePopup();
     });
   }
 
   _clickClose(clickElement) { // клик по лайку
-    clickElement.querySelector(this._buttonCloseFullScreen).addEventListener('click', () => this._closePopup());
+    clickElement.querySelector('.popup__button-close').addEventListener('click', () => this._closePopup());
   }
 
   _clickLike(clickElement) { // клик по лайку
-    clickElement.querySelector(this._buttonLike).addEventListener('click', (evt) => {
-      evt.target.classList.toggle(this._buttonLikeActive);
+    clickElement.querySelector('.card__like').addEventListener('click', (evt) => {
+      evt.target.classList.toggle('card__like_active');
     });
   }
 
   _clickDelete(clickElement) { // клик по корзине
-    clickElement.querySelector(this._buttonDelete).addEventListener('click', (evt) => {
-      evt.target.closest(this._galleryElement).remove();
+    clickElement.querySelector('.card__delete').addEventListener('click', (evt) => {
+      evt.target.closest('.gallery__element').remove();
     });
 
   }
 
   _clickImage(clickElement) { // клик по картинке
 
-    clickElement.querySelector(this._image).addEventListener('click', () => {
-      // перед открытием заполняем попап popupFullScreen данными 
-      this._popupFullScreen.querySelector(this._imageFullScreen).src = this._dataLinkImage;
-      this._popupFullScreen.querySelector(this._imageFullScreen).alt = this._dataTitleImage;
-      this._popupFullScreen.querySelector(this._titleFullScreen).textContent = this._dataTitleImage;
+    clickElement.querySelector('.card__image').addEventListener('click', () => {
+      // перед открытием заполняем попап popupFullScreen данными
+      const popupFullScreen = document.querySelector('.popup_full-screen');
+      popupFullScreen.querySelector('.full-screen__image').src = this._dataLinkImage;
+      popupFullScreen.querySelector('.full-screen__image').alt = this._dataTitleImage;
+      popupFullScreen.querySelector('.full-screen__caption').textContent = this._dataTitleImage;
 
       // открываем готовый попап
-      this._openPopup();
-      this._clickClose(this._popupFullScreen);
+      this._openPopup(popupFullScreen);
     });
   }
 
@@ -108,9 +84,9 @@ export class Card {
 
     const galleryElement = this._template.cloneNode(true); // клонируем html из шаблона (this._template)
 
-    galleryElement.querySelector(this._image).src = this._dataLinkImage; // link на фото
-    galleryElement.querySelector(this._image).alt = this._dataTitleImage; // alt фото
-    galleryElement.querySelector(this._title).textContent = this._dataTitleImage; // caption фото
+    galleryElement.querySelector('.card__image').src = this._dataLinkImage; // link на фото
+    galleryElement.querySelector('.card__image').alt = this._dataTitleImage; // alt фото
+    galleryElement.querySelector('.card__caption').textContent = this._dataTitleImage; // caption фото
 
     // методы необходимые новой карточке 
     this._clickLike(galleryElement);
@@ -120,14 +96,13 @@ export class Card {
     return galleryElement;
   }
 
-  
   generateCard(insert = 'down') { // генерируем и добавляем новую карту вначало или конец галереи
     if (insert == 'up') {
-      return document.querySelector(this._galleryContainer).
+      return document.querySelector('.gallery__photo-grid').
         prepend(this._createCard());
 
     } else {
-      return document.querySelector(this._galleryContainer).
+      return document.querySelector('.gallery__photo-grid').
         append(this._createCard());
     }
   };
