@@ -1,10 +1,10 @@
 import { Card } from './Card.js'
-import { settingsCard } from './settingsCard.js'
 
 import { FormValidator } from './FormValidator.js'
 import { settingsFormValid } from './settingsFormValid.js';
 
 import { dataCards } from './dataCards.js'
+import { hotKeys } from './hotKeys.js';
 
 //переменные блока profile
 const profile = document.querySelector('.profile'); //находим блок "profile" в DOM
@@ -76,7 +76,7 @@ function handleEscUp(evt) {
   evt.preventDefault();
   const openedPopup = document.querySelector('.popup_opened'); // ищем открытый попап в document
 
-  if (evt.key === 'Escape') {
+  if (evt.key === hotKeys.esc) {
     closePopup(openedPopup);
   }
 }
@@ -85,7 +85,7 @@ function handleEscUp(evt) {
 
 // ----- Заполняем галерею ----- //
 dataCards.forEach(element => {
-  const card = new Card(element, settingsCard);
+  const card = new Card(element, '.card-template');
   card.generateCard();
 });
 
