@@ -30,7 +30,7 @@ const mestoLinkInput = formGallery.elements.mestoLinkInput; // находим п
 
 // ----- Функции ----- //
 // 1. Функция открытия попапов
-function openPopup(popupName) {
+export function openPopup(popupName) {
   popupName.classList.add('popup_opened');
   document.addEventListener('keyup', handleEscUp); // добавляем событие "Ожидание клавиши Esc"
 
