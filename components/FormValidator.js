@@ -1,11 +1,11 @@
-export class FormValidator {
+/* 
+Класс FormValidator служат для валидации формы
+  - первым параметром принимает DOM-элемент с формой, для которой необходимо выполнить валидацию.
+  - вторым параметром принимает объект settings, содержащий набор селекторов для настройки.
 
-  _form
-  _input
-  _submitButton
-  _submitButtonInactive
-  _errorSuffix //суфикс с ошибкой, для добавления к ошибочному инпуту
-  _inputError
+  Метод enableValidation() включает валидацию формы (той что принята как первый параметр).
+*/
+export default class FormValidator {
 
   constructor(form, settings) {
     this._form = form;
@@ -44,14 +44,14 @@ export class FormValidator {
   };
 
   // метод проверки массива инпутов на валидновть, возвращает true или folse
-  _hasValidInput = (inputsList) => {
+  _hasValidInput(inputsList) {
     return inputsList.some((input) => {
       return !input.validity.valid;
     });
   }
 
   // метод переключения активности кнопки
-  _toggleButtonState = (inputsList, buttonSubmit) => { // принимаем массив инпутов, кнопку
+  _toggleButtonState(inputsList, buttonSubmit) { // принимаем массив инпутов, кнопку
     if (this._hasValidInput(inputsList)) {
       buttonSubmit.classList.add(this._submitButtonInactive);
       buttonSubmit.setAttribute('disabled', true);

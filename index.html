@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
 
   <title>Место</title>
 </head>
@@ -69,19 +69,19 @@
         <div class="form__inputs">
 
           <div class="form__input-element">
-            <input class="form__input" id="mesto-name-input" type="text" name="mestoNameInput" placeholder="Название"
+            <input class="form__input" id="mesto-name-input" type="text" name="name" placeholder="Название"
               minlength="2" maxlength="30" required>
             <span class="form__input-error" id="mesto-name-input-error"></span>
           </div>
 
           <div class="form__input-element">
-            <input class="form__input" id="mesto-link-input" type="url" name="mestoLinkInput"
+            <input class="form__input" id="mesto-link-input" type="url" name="link"
               placeholder="Ссылка на картинку" required>
             <span class="form__input-error" id="mesto-link-input-error"></span>
           </div>
 
         </div>
-        <button class="form__button-save" type="submit" value="Сохранить" disabled>Сохранить</button>
+        <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
         <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
       </form>
     </div>
@@ -116,14 +116,7 @@
     </li>
   </template>
 
-  <script type="module" src="./scripts/Card.js"></script>
-  <script type="module" src="./scripts/hotKeys.js"></script>
-
-  <script type="module" src="./scripts/FormValidator.js"></script>
-  <script type="module" src="./scripts/settingsFormValid.js"></script>
-
-  <script type="module" src="./scripts/dataCards.js"></script>
-  <script type="module" src="./scripts/index.js"></script>
+  <!-- <script type="module" src="./pages/index.js"></script> -->
 
 </body>
 
