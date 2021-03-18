@@ -20,6 +20,7 @@ export default class PopupWithForm extends Popup {
 
     this._form = this._popup.querySelector('.form');
     this._inputList = this._form.querySelectorAll('.form__input');
+    this._formSubmitEvent = this._formSubmitEvent.bind(this);
   }
 
   // метод _getInputValues собирает данные всех полей формы
@@ -31,27 +32,22 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    this._form.addEventListener('submit', this._eventFormSubmit);
-
+    this._form.addEventListener('submit', this._formSubmitEvent)
     return super.setEventListeners();
   }
 
-  _eventFormSubmit(evt) {
+  _formSubmitEvent(evt) {
     evt.preventDefault();
     this._handleFormSubmit(this._getInputValues());
   }
 
   close() {
     this._form.reset();
-
     return super.close()
   }
 
-
   open() {
     this._handleFormValidator(this._form)
-
     return super.open()
   }
-
 }

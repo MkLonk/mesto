@@ -18,19 +18,19 @@ export default class Card {
     this._popupFullScreen = document.querySelector('.popup_full-screen');
   };
 
-  _eventClickLike() { // клик по лайку
+  _сlickLikeEvent() { // событие клик по лайку
     this._galleryElement.querySelector('.card__like').addEventListener('click', (evt) => {
       evt.target.classList.toggle('card__like_active');
     });
   };
 
-  _eventClickDelete() { // клик по корзине
+  _clickDeleteEvent() { // событие клик по корзине
     this._galleryElement.querySelector('.card__delete').addEventListener('click', (evt) => {
       evt.target.closest('.gallery__element').remove();
     });
   };
 
-  _eventClickImage() { // клик по картинке
+  _clickImageEvent() { // событие клик по картинке
     this._galleryElement.querySelector('.card__image')
       .addEventListener('click', this._handleCardClick.bind(this))
   };
@@ -44,11 +44,10 @@ export default class Card {
     cellTitle.textContent = this._dataTitleImage; // caption фото
 
     // методы необходимые новой карточке 
-    this._eventClickLike();
-    this._eventClickDelete();
-    this._eventClickImage();
+    this._сlickLikeEvent();
+    this._clickDeleteEvent();
+    this._clickImageEvent();
 
-    return this._galleryElement;
+    return this._galleryElement; // возвращаем полностью готовую карточку
   };
-
 };

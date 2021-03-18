@@ -6,8 +6,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = {
-  entry: { main: './pages/index.js' }, //точка входа, первое место, куда заглянет webpack
-  output: { //// указали в какой файл будет собираться весь js и дали ему имя
+  entry: { main: '/src/pages/index.js' }, //точка входа, первое место, куда заглянет webpack
+  output: { // указали в какой файл будет собираться весь js и дали ему имя
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
     publicPath: ''
@@ -24,7 +24,7 @@ module.exports = {
   },
 
   plugins: [
-    new HtmlWebpackPlugin({ template: './index.html' }),
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin()
   ],

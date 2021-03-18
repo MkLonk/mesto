@@ -1,6 +1,6 @@
-import './index.css';
+import './index.css'
 
-import Section from '../components/Section.js';
+import Section from '../components/Section';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
@@ -20,17 +20,25 @@ const userInfoList = new UserInfo({
   selectorUserJob: '.profile__user-job'
 })
 
-/*
-создаем объект cardsList который содержит готовую разметку
+/* создаем попап для Полноэкранных картинок */
+const popupFullScreen = new PopupWithImage('.popup_full-screen');
+
+/* создаем валидацию для form_edit-profile */
+const formEditProfileValid = new FormValidator('.form_edit-profile', settingsFormValid);
+formEditProfileValid.enableValidation();
+
+/* создаем валидацию для form_add-gallery */
+const formAddProfileValid = new FormValidator('.form_add-gallery', settingsFormValid);
+
+
+/* создаем объект cardsList который содержит готовую разметку
 с карточками из массива dataCards */
 const cardsList = new Section({
   items: dataCards,
   renderer: (item) => {
 
     const card = new Card(item, '.card-template', () => {
-
-      const popupFull = new PopupWithImage(item, '.popup_full-screen')
-      popupFull.open();
+      popupFullScreen.open(item);
     });
 
     const cardElement = card.createCard();
@@ -40,11 +48,12 @@ const cardsList = new Section({
 // добавляем карточки из объекта cardsList на страницу
 cardsList.renderItems();
 
+
 // создаем объект popupEditProfile
 const popupEditProfile = new PopupWithForm('.popup-edit-profile',
   {
     handleFormSubmit: (inputs) => { // когда форма отправлена создать новую карточку
-      userInfoList.setUserInfo(inputs.userNameInput, inputs.userJobInput)
+      userInfoList.setUserInfo(inputs.userNameInput, inputs.userJobInput);
       popupEditProfile.close();
     },
     handleFormValidator: (openForm) => {
@@ -54,9 +63,10 @@ const popupEditProfile = new PopupWithForm('.popup-edit-profile',
       openForm.elements.userNameInput.value = saveUserInfo.userName
       openForm.elements.userJobInput.value = saveUserInfo.userJob
 
-      //включаем валидацию формы
-      const formValid = new FormValidator(openForm, settingsFormValid);
-      formValid.enableValidation();
+      //Инпуты при открытии валидны, надо отключить их проверку и делать кнопку активной (только при открытии формы)
+      formEditProfileValid.checkInputValidity(openForm.elements.userNameInput);
+      formEditProfileValid.checkInputValidity(openForm.elements.userJobInput);
+      formEditProfileValid.toggleButtonState();
     }
   }
 );
@@ -66,30 +76,17 @@ const popupAddGallery = new PopupWithForm('.popup-add-gallery',
   {
     handleFormSubmit: (inputs) => { // когда форма отправлена создать новую карточку
 
-      const newCardList = new Section({
-        items: [inputs],
-        renderer: (item) => {
+      const addCard = new Card(inputs, '.card-template', () => { popupFullScreen.open(inputs) });
+      const addCardElement = addCard.createCard();
 
-          const newCard = new Card(item, '.card-template', () => {
-
-            const popupFull = new PopupWithImage(item, '.popup_full-screen')
-            popupFull.open();
-          });
-
-          const cardElement = newCard.createCard();
-          newCardList.addItem(cardElement, 'up');
-        }
-      }, '.gallery__photo-grid');
-
-      newCardList.renderItems();
+      cardsList.addItem(addCardElement, 'up');
       popupAddGallery.close();
     },
+
     handleFormValidator: (openForm) => {
-      const formValid = new FormValidator(openForm, settingsFormValid);
-      formValid.enableValidation();
+      formAddProfileValid.enableValidation();
     }
   });
-
 
 // клик по кнопке buttonEditProfile запускает метод open() объекта popupEditProfile
 buttonEditProfile.addEventListener('click', () => {
