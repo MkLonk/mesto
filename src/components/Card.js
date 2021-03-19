@@ -12,28 +12,28 @@ export default class Card {
   constructor(data, selectorTemplate, handleCardClick) {
     this._dataLinkImage = data.link;
     this._dataTitleImage = data.name;
-    this._handleCardClick = handleCardClick;
+
+    this._handleCardClick = handleCardClick.bind(this);
+    this._handleLikeClick = this._handleLikeClick.bind(this)
+    this._handleDeleteClick = this._handleDeleteClick.bind(this)
 
     this._galleryElement = document.querySelector(selectorTemplate).content.cloneNode(true);;
     this._popupFullScreen = document.querySelector('.popup_full-screen');
   };
 
-  _сlickLikeEvent() { // событие клик по лайку
-    this._galleryElement.querySelector('.card__like').addEventListener('click', (evt) => {
-      evt.target.classList.toggle('card__like_active');
-    });
-  };
+  _handleLikeClick(evt) {
+    evt.target.classList.toggle('card__like_active');
+  }
 
-  _clickDeleteEvent() { // событие клик по корзине
-    this._galleryElement.querySelector('.card__delete').addEventListener('click', (evt) => {
-      evt.target.closest('.gallery__element').remove();
-    });
-  };
+  _handleDeleteClick(evt) {
+    evt.target.closest('.gallery__element').remove();
+  }
 
-  _clickImageEvent() { // событие клик по картинке
-    this._galleryElement.querySelector('.card__image')
-      .addEventListener('click', this._handleCardClick.bind(this))
-  };
+  _setEventListeners() {
+    this._galleryElement.querySelector('.card__like').addEventListener('click', this._handleLikeClick);
+    this._galleryElement.querySelector('.card__delete').addEventListener('click', this._handleDeleteClick);
+    this._galleryElement.querySelector('.card__image').addEventListener('click', this._handleCardClick);
+  }
 
   createCard() { // создаем новую карточку
     const cellImage = this._galleryElement.querySelector('.card__image');
@@ -43,10 +43,7 @@ export default class Card {
     cellImage.alt = this._dataTitleImage; // alt фото
     cellTitle.textContent = this._dataTitleImage; // caption фото
 
-    // методы необходимые новой карточке 
-    this._сlickLikeEvent();
-    this._clickDeleteEvent();
-    this._clickImageEvent();
+    this._setEventListeners();
 
     return this._galleryElement; // возвращаем полностью готовую карточку
   };

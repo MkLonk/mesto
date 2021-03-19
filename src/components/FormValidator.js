@@ -67,14 +67,16 @@ export default class FormValidator {
   // собираем ВСЕ инпуты из form в массив inputList, в buttonSubmit записываем сабмит формы
   // после запускаем методы для проверки существующих и вновь введенных значений в инпутах
   _setEventListeners() {
-    this.inputsList.forEach(input => {
+
+    this.inputsList.forEach(inputElement => {
+
       // сразу эти методы чтобы проверить существующие значения и инпутах
-      this.checkInputValidity(input); // проверка в инпутах
+      this.checkInputValidity(inputElement); // проверка в инпутах
       this.toggleButtonState(); // состояние кнопки
 
       // теперь вешаем эти методы для проверки инпутов при вводе значений с клавиатуры
-      input.addEventListener('input', () => {
-        this.checkInputValidity(input); // проверка в инпутах
+      inputElement.addEventListener('input', () => {
+        this.checkInputValidity(inputElement); // проверка в инпутах
         this.toggleButtonState(); // состояние кнопки
       });
     });
@@ -87,7 +89,6 @@ export default class FormValidator {
       evt.preventDefault(); // отменяем событие submit по умолчанию
     });
 
-    this._setEventListeners(this._form);
+    this._setEventListeners();
   };
-
 }
