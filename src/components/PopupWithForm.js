@@ -46,8 +46,8 @@ export default class PopupWithForm extends Popup {
     return super.close()
   }
 
-  open() {
-    this._handleFormValidator(this._form)
+  open(data) {
+    this._handleFormValidator(this._form, data)
     return super.open()
   }
 }
