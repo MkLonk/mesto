@@ -7,13 +7,16 @@
 */
 export default class FormValidator {
 
-  constructor(form, settings) {
-    this._form = form;
+  constructor(formSelector, settings) {
+    this._form = document.querySelector(formSelector);
     this._input = settings.selectorInput;
     this._submitButton = settings.selectorSubmitButton;
     this._submitButtonInactive = settings.selectorInactiveButton;
     this._inputError = settings.selectorInputError;
     this._errorSuffix = settings.selectorErrorSuffix;
+
+    this.buttonSubmit = this._form.querySelector(this._submitButton);
+    this.inputsList = Array.from(this._form.querySelectorAll(this._input));
   }
 
   // метод показывает сообщения об ошибке в инпуте и меняет вид инпута (красная обводка)
@@ -33,7 +36,7 @@ export default class FormValidator {
   };
 
   // метод проверки полей на ошибки (валидация полей)
-  _checkInputValidity(input) {
+  checkInputValidity(input) {
 
     if (!input.validity.valid) { // если validity.valid ложь, показать ошибку
       this._showInputError(input, input.validationMessage);
@@ -44,39 +47,37 @@ export default class FormValidator {
   };
 
   // метод проверки массива инпутов на валидновть, возвращает true или folse
-  _hasValidInput(inputsList) {
-    return inputsList.some((input) => {
+  _hasValidInput() {
+    return this.inputsList.some((input) => {
       return !input.validity.valid;
     });
   }
 
   // метод переключения активности кнопки
-  _toggleButtonState(inputsList, buttonSubmit) { // принимаем массив инпутов, кнопку
-    if (this._hasValidInput(inputsList)) {
-      buttonSubmit.classList.add(this._submitButtonInactive);
-      buttonSubmit.setAttribute('disabled', true);
+  toggleButtonState() { // принимаем массив инпутов, кнопку
+    if (this._hasValidInput()) {
+      this.buttonSubmit.classList.add(this._submitButtonInactive);
+      this.buttonSubmit.setAttribute('disabled', true);
     } else {
-      buttonSubmit.classList.remove(this._submitButtonInactive);
-      buttonSubmit.removeAttribute('disabled');
+      this.buttonSubmit.classList.remove(this._submitButtonInactive);
+      this.buttonSubmit.removeAttribute('disabled');
     }
   };
 
   // собираем ВСЕ инпуты из form в массив inputList, в buttonSubmit записываем сабмит формы
   // после запускаем методы для проверки существующих и вновь введенных значений в инпутах
-  _setEventListeners(form) {
-    const inputsList = Array.from(form.querySelectorAll(this._input)); //собираем массив инпутов
-    const buttonSubmit = form.querySelector(this._submitButton); // ищем сабмит в форме
+  _setEventListeners() {
 
-    inputsList.forEach(input => {
+    this.inputsList.forEach(inputElement => {
 
-      // сразу эти методы чтобы проверить существующие значения и пнтупах
-      this._checkInputValidity(input); // проверка в инпутах
-      this._toggleButtonState(inputsList, buttonSubmit); // состояние кнопки
+      // сразу эти методы чтобы проверить существующие значения и инпутах
+      this.checkInputValidity(inputElement); // проверка в инпутах
+      this.toggleButtonState(); // состояние кнопки
 
       // теперь вешаем эти методы для проверки инпутов при вводе значений с клавиатуры
-      input.addEventListener('input', () => {
-        this._checkInputValidity(input); // проверка в инпутах
-        this._toggleButtonState(inputsList, buttonSubmit); // состояние кнопки
+      inputElement.addEventListener('input', () => {
+        this.checkInputValidity(inputElement); // проверка в инпутах
+        this.toggleButtonState(); // состояние кнопки
       });
     });
   };
@@ -88,7 +89,6 @@ export default class FormValidator {
       evt.preventDefault(); // отменяем событие submit по умолчанию
     });
 
-    this._setEventListeners(this._form);
+    this._setEventListeners();
   };
-
 }

@@ -10,22 +10,18 @@ import Popup from './Popup.js'
 
 export default class PopupWithImage extends Popup {
 
-  constructor(data, selectorPopup) {
+  constructor(selectorPopup) {
     super(selectorPopup);
-
-    this._popup = document.querySelector(selectorPopup);
-    this._linkImage = data.link;
-    this._titleImage = data.name;
   }
 
 
-  open() {
+  open(data) {
     const cellFullScreenImage = this._popup.querySelector('.full-screen__image');
     const cellFullScreenTitle = this._popup.querySelector('.full-screen__caption');
 
-    cellFullScreenImage.src = this._linkImage;
-    cellFullScreenImage.alt = this._titleImage;
-    cellFullScreenTitle.textContent = this._titleImage;
+    cellFullScreenImage.src = data.link;
+    cellFullScreenImage.alt = data.name;
+    cellFullScreenTitle.textContent = data.name;
 
     return super.open()
   }
