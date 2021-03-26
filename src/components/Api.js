@@ -46,8 +46,6 @@ export default class Api {
   }
 
 
-  /* --- CARDS --- */
-
   loadCards() {
     return fetch(`${this._url}/${this._team}/cards`, {
       method: 'GET',
@@ -88,7 +86,6 @@ export default class Api {
       });
   }
 
-
   delCard(idCard) {
     return fetch(`${this._url}/${this._team}/cards/${idCard}`, {
       method: 'DELETE',
@@ -124,7 +121,6 @@ export default class Api {
       .catch(err => Promise.reject(err));
   }
 
-
   editAvatar(avatarLink) {
     return fetch(`${this._url}/${this._team}/users/me/avatar`, {
       method: 'PATCH',
@@ -144,7 +140,5 @@ export default class Api {
       })
       .catch(err => Promise.reject(err));
   }
-
-
 
 }

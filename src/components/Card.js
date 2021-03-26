@@ -62,10 +62,6 @@ export default class Card {
     } */
 
   createCard(cardId) { // создаем новую карточку
-    /*     const cellImage = this._galleryElement.querySelector('.card__image');
-        const cellTitle = this._galleryElement.querySelector('.card__caption');
-        const cellLikeCounter = this._galleryElement.querySelector('.card__like-counter');
-        const cellDeleteIcon = this._galleryElement.querySelector('.card__delete'); */
 
     this._cellImage.src = this._dataLinkImage; // link на фото
     this._cellImage.alt = this._dataTitleImage; // alt фото
