@@ -20,13 +20,16 @@
 
       <section class="profile">
         <div class="profile__container">
-          <div class="profile__avatar"></div>
+          <div class="profile__avatar">
+            <button class="profile__button-avatar-edit" type="button" aria-label="Изменить аватар"></button>
+          </div>
+
           <div class="profile__user-container">
-            <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+            <h1 class="profile__user-name">Загружаем...</h1>
             <button class="profile__button-edit" type="button" aria-label="Редактировать профиль"></button>
           </div>
           <button class="profile__button-add" type="button" aria-label="Добавить фото"></button>
-          <p class="profile__user-job">Исследователь океана</p>
+          <p class="profile__user-job">Загружаем...</p>
         </div>
       </section>
 
@@ -62,6 +65,27 @@
       </form>
     </div>
 
+
+<!-- Попап для формы редактирования avatar -->
+    <div class="popup popup-edit-avatar">
+      <form class="form form_edit-avatar" name="formEditAvatar" method="get" novalidate>
+        <h2 class="form__title">Обновить аватар</h2>
+        <div class="form__inputs">
+
+          <div class="form__input-element">
+            <input class="form__input" id="avatar-link-input" type="url" name="avatarLinkInput" placeholder="Ссылка на картинку" required>
+            <span class="form__input-error" id="avatar-link-input-error"></span>
+          </div>
+
+        </div>
+        <button class="form__button-save" type="submit" value="Сохранить">Сохранить</button>
+        <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
+      </form>
+    </div>
+
+
+
+
     <!-- Попап для формы добавления новой карточки в gallery -->
     <div class="popup popup-add-gallery">
       <form class="form form_add-gallery" name="formAddGallery" method="get" novalidate>
@@ -95,6 +119,15 @@
       </div>
     </div>
 
+    <!-- Попап перед удалением карточки из gallery -->
+    <div class="popup popup_delete-card">
+      <form class="form form_delete-card" name="formDelCard" method="get" novalidate>
+        <h2 class="form__title">Вы уверены?</h2>
+        <button class="form__button-save" type="submit" value="Сохранить">Да</button>
+        <button class="popup__button-close" type="button" aria-label="Закрыть"></button>
+      </form>
+    </div>
+
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -104,13 +137,16 @@
 
   <!-- Шаблон элемента галерии card -->
   <template class="card-template">
-    <li class="gallery__element">
+    <li class="gallery__element" name="sos">
       <article class="card">
         <img class="card__image" src="src" alt="alt">
         <button class="card__delete" type="button" aria-label="Удалить"></button>
         <div class="card__caption-container">
           <h2 class="card__caption"></h2>
-          <button class="card__like" type="button" aria-label="Нравится"></button>
+          <div class="card__like-container">
+            <button class="card__like" type="button" aria-label="Нравится"></button>
+            <div class="card__like-counter">2</div>
+          </div>
         </div>
       </article>
     </li>

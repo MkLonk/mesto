@@ -1,5 +1,6 @@
 .card__caption-container {
+  min-height: 76px;
   display: flex;
   justify-content: space-between;
-  padding: 22px 15px 25px 21px;
+  padding: 0 0 0 21px;
 }
