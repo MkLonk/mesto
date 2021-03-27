@@ -9,56 +9,89 @@
 
 export default class Card {
 
-  constructor(data, selectorTemplate, {handleCardClick, handleDeleteClick}) {
+  constructor(data, selectorTemplate, { handleCardClick, handleDelete, handleLike }, idAuthorizedUser) {
+
+    // разбираем объект data
     this._dataLinkImage = data.link;
     this._dataTitleImage = data.name;
     this._dataLikeCounter = data.likes.length; //длина массива лайков
     this._dataIdAutur = data.owner._id; //id автора карточки
-    //this._cardId = data._id; //id карточки
+    this._dataLikes = data.likes // массив лайков
 
+    this._idAuthorizedUser = idAuthorizedUser // id авторизованного пользователя
+    this._cardId = data._id // id новой карточки
+    this.isLiked = false // есть ли лайк у карточки 
 
+    // входящие функции
     this._handleCardClick = handleCardClick.bind(this);
-    this._handleDeleteClick = handleDeleteClick.bind(this)
-    this._handleLikeClick = this._handleLikeClick.bind(this)
+    this._handleDelete = handleDelete.bind(this)
+    this._handleLike = handleLike.bind(this)
 
     this._galleryElement = document.querySelector(selectorTemplate).content.cloneNode(true);
     this._popupFullScreen = document.querySelector('.popup_full-screen');
+
+    //элемент DOM с кнопкой like
+    this._buttonLike = this._galleryElement.querySelector('.card__like')
+
+    // ячейки приема данных
+    this._cellImage = this._galleryElement.querySelector('.card__image');
+    this._cellTitle = this._galleryElement.querySelector('.card__caption');
+    this._cellLikeCounter = this._galleryElement.querySelector('.card__like-counter');
+    this._cellDeleteIcon = this._galleryElement.querySelector('.card__delete');
+
   };
 
-  _handleLikeClick(evt) {
+  toggleLike(evt) {
     evt.target.classList.toggle('card__like_active');
+
+    const cellLikeCounter = evt.target.closest('.card__like-container').querySelector('.card__like-counter')
+    const counter = Number(cellLikeCounter.textContent)
+
+    if (this.isLiked) {
+      cellLikeCounter.textContent = counter - 1;
+    } else {
+      cellLikeCounter.textContent = counter + 1;
+    }
   }
 
-  _handleDeleteClick(evt) {
+  removeCard(evt) {
     evt.target.closest('.gallery__element').remove();
   }
+  /*     this._galleryElement.querySelector('.card__delete').addEventListener('click', (evt) => {
+        evt.target.closest('.gallery__element').remove();
+      }); */
+
 
   _setEventListeners() {
-    this._galleryElement.querySelector('.card__like').addEventListener('click', this._handleLikeClick);
-    /* this._galleryElement.querySelector('.card__delete').addEventListener('click', this._handleDeleteClick); */
+    this._galleryElement.querySelector('.card__like').addEventListener('click', this._handleLike);
     this._galleryElement.querySelector('.card__image').addEventListener('click', this._handleCardClick);
-    this._galleryElement.querySelector('.card__delete').addEventListener('click', this._handleDeleteClick);
+    this._galleryElement.querySelector('.card__delete').addEventListener('click', this._handleDelete);
   }
 
-  getCardId() {
-    return this._cardId
+  getId() {
+    return this._cardId;
   }
 
-  createCard() { // создаем новую карточку
-    const cellImage = this._galleryElement.querySelector('.card__image');
-    const cellTitle = this._galleryElement.querySelector('.card__caption');
-    const cellLikeCounter = this._galleryElement.querySelector('.card__like-counter');
-    const cellDeleteIcon = this._galleryElement.querySelector('.card__delete');
+  createCard(cardId) { // создаем новую карточку
 
-    cellImage.src = this._dataLinkImage; // link на фото
-    cellImage.alt = this._dataTitleImage; // alt фото
-    cellTitle.textContent = this._dataTitleImage; // caption фото
-    cellLikeCounter.textContent = this._dataLikeCounter; // кол-во лайков
+    this._cellImage.src = this._dataLinkImage; // link на фото
+    this._cellImage.alt = this._dataTitleImage; // alt фото
+    this._cellTitle.textContent = this._dataTitleImage; // caption фото
+    this._cellLikeCounter.textContent = this._dataLikeCounter; // кол-во лайков
 
     //если автор карточки Вы, показать уконку удаления
-    if (this._dataIdAutur === '6cbeb70e06621067767a5289') {
-      cellDeleteIcon.style.display = 'block';
+    if (this._dataIdAutur === this._idAuthorizedUser) {
+      this._cellDeleteIcon.style.display = 'block';
     }
+
+    //если в массиве лайков есть Вы, сделать лайк автивным (закрасить)
+    this._dataLikes.forEach(like => {
+      if (like._id === this._idAuthorizedUser) {
+        this._buttonLike.classList.add('card__like_active');
+        this.isLiked = true;
+        return;
+      }
+    })
 
     this._setEventListeners();
 

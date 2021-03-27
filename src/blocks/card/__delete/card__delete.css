@@ -1,4 +1,6 @@
 .card__delete {
+  display: none;
+
   width: 18px;
   height: 19px;
 

@@ -2,34 +2,43 @@ import Popup from './Popup.js'
 
 export default class PopupDeleteImage extends Popup {
 
-  constructor(selectorPopup/*, { 
-    getDeleteInfo,
-    handleDeleteCard
-  }*/) {
+  constructor(selectorPopup) {
     super(selectorPopup);
 
-    /*    this._handleDeleteCard = handleDeleteCard;
-      this._getDeleteInfo = getDeleteInfo;
-   */
     this._form = this._popup.querySelector('.form');
-    //this._handleEventSubmit = this._handleEventSubmit.bind(this);
+    this._buttonConfirm = this._form.querySelector('.form__button-save')
+
+    this.handleEventSubmit = this.handleEventSubmit.bind(this)
 
   }
 
-  getDeleteSubmit() {
+  getDelFormSubmit() {
     return this._form
   }
 
 
+  handleEventSubmit(evt) {
+    evt.preventDefault();
+    this._buttonConfirm.textContent = 'Удаление...'
+    console.log('Нажали ДА')
+  }
 
 /*   setEventListeners() {
+    console.log('Сработал setEventListeners попапа')
+    this._form.addEventListener('submit', this.handleEventSubmit)
+    return super.setEventListeners();
 
-    this._form.addEventListener('submit', this._handleEventSubmit)
-    return super.setEventListeners()
   } */
 
-/*   _handleEventSubmit(evt) {
-    evt.preventDefault();
-    console.log('нажал')
-  } */
+  open() {
+    console.log('Открыт попап удаления')
+    this._buttonConfirm.textContent = 'Да';
+
+    return super.open()
+  }
+
+  close() {    
+    return super.close()
+  }
+
 }

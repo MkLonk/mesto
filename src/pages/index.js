@@ -1,27 +1,33 @@
 import './index.css'
 
+import Api from '../components/Api';
+
 import Section from '../components/Section';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupDeleteImage from '../components/PopupDeleteImage.js';
+
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 
+import { configApi } from '../utils/constants.js';
 import { settingsFormValid } from '../utils/constants.js';
 import { buttonEditProfile } from '../utils/constants.js';
 import { buttonAddGallery } from '../utils/constants.js';
-import { dataCards } from '../utils/constants.js';
+import { buttonEditAvatar } from '../utils/constants.js';
 
-/*
-сразу создаем объект userInfoList, чтобы иметь возможность
-использовать его методы getUserInfo() и setUserInfo() */
-const userInfoList = new UserInfo({
-  selectorUserName: '.profile__user-name',
-  selectorUserJob: '.profile__user-job'
-})
+let idAuthorizedUser = ''; // переменная для хранения id авторизованного пользователя
 
-/* создаем попап для Полноэкранных картинок */
-const popupFullScreen = new PopupWithImage('.popup_full-screen');
+/****************************************
+ * Создаем объект myApi, для запросов к серверу
+****************************************/
+const myApi = new Api(configApi);
+
+
+/****************************************
+ * Создаем объекты для валидации форм
+****************************************/
 
 /* создаем валидацию для form_edit-profile */
 const formEditProfileValid = new FormValidator('.form_edit-profile', settingsFormValid);
@@ -30,34 +36,62 @@ formEditProfileValid.enableValidation();
 /* создаем валидацию для form_add-gallery */
 const formAddProfileValid = new FormValidator('.form_add-gallery', settingsFormValid);
 
-
-/* создаем объект cardsList который содержит готовую разметку
-с карточками из массива dataCards */
-const cardsList = new Section({
-  items: dataCards,
-  renderer: (item) => {
-
-    const card = new Card(item, '.card-template', () => {
-      popupFullScreen.open(item);
-    });
-
-    const cardElement = card.createCard();
-    cardsList.addItem(cardElement);
-  }
-}, '.gallery__photo-grid');
-// добавляем карточки из объекта cardsList на страницу
-cardsList.renderItems();
+/* создаем валидацию для form_add-gallery */
+const formEditAvatarValid = new FormValidator('.form_edit-avatar', settingsFormValid);
+formEditAvatarValid.enableValidation();
 
 
-// создаем объект popupEditProfile
+/****************************************
+ * Создаем секцию userInfoList
+****************************************/
+
+/* создаем объект userInfoList */
+const userInfoList = new UserInfo({
+  selectorUserName: '.profile__user-name',
+  selectorUserJob: '.profile__user-job',
+  selectorUserAvatar: '.profile__avatar',
+});
+
+/* делаем запрос на сервер, и получаем информацию о пользователе */
+myApi.loadUserData()
+  .then(userData => {
+    userInfoList.loadUserInfo(userData)
+    idAuthorizedUser = userData._id
+  })
+  .catch(err => `Ошибка при загрузке данных о пользователе - ${err}`)
+
+/* создаем объект (попап) popupEditAvatar для редактирования Аватара */
+const popupEditAvatar = new PopupWithForm('.popup-edit-avatar', {
+
+  handleFormSubmit: (inputs) => {
+
+    myApi.editAvatar(inputs.avatarLinkInput)
+      .then(res => {
+        userInfoList.setUserAvatar(res.avatar);
+        popupEditAvatar.close();
+        console.log(`Аватар пользователя '${res.name}' успешно изменён.`);
+      })
+      .catch(err => `Ошибка при изменении аватара пользователя - ${err}`)
+  },
+
+  handleFormValidator: () => { }
+});
+
+/* создаем объект (попап) popupEditProfile для редактирования информации о пользователе */
 const popupEditProfile = new PopupWithForm('.popup-edit-profile',
   {
-    handleFormSubmit: (inputs) => { // когда форма отправлена создать новую карточку
-      userInfoList.setUserInfo(inputs.userNameInput, inputs.userJobInput);
-      popupEditProfile.close();
+    handleFormSubmit: (inputs) => { // когда форма отправлена
+      myApi.editUserInfo(inputs.userNameInput, inputs.userJobInput)
+        .then(res => {
+          userInfoList.setUserInfo(res.name, res.about);
+          popupEditProfile.close();
+          console.log(`Данные пользователя '${res.name}' успешно изменены.`);
+        })
+        .catch(err => `Ошибка при изменении данных пользователя - ${err}`)
     },
-    handleFormValidator: (openForm) => {
-      //извлекаем данные из userInfoList
+
+    handleFormValidator: (openForm) => { // когда форму открывают
+      //извлекаем данные userInfoList
       const saveUserInfo = userInfoList.getUserInfo();
       // и подставляем в инпуты формы
       openForm.elements.userNameInput.value = saveUserInfo.userName
@@ -71,29 +105,121 @@ const popupEditProfile = new PopupWithForm('.popup-edit-profile',
   }
 );
 
-// создаем объект popupAddGallery
-const popupAddGallery = new PopupWithForm('.popup-add-gallery',
-  {
-    handleFormSubmit: (inputs) => { // когда форма отправлена создать новую карточку
+/* слушатель кнопки buttonEditAvatar - для редактирования Аватара*/
+buttonEditAvatar.addEventListener('click', () => {
+  popupEditAvatar.open();
+  popupEditAvatar.setEventListeners();
+});
 
-      const addCard = new Card(inputs, '.card-template', () => { popupFullScreen.open(inputs) });
-      const addCardElement = addCard.createCard();
+/* слушатель кнопки buttonEditProfile - для редактирования информации о пользователе */
+buttonEditProfile.addEventListener('click', () => {
+  popupEditProfile.open();
+  popupEditProfile.setEventListeners();
+});
 
-      cardsList.addItem(addCardElement, 'up');
-      popupAddGallery.close();
+
+/****************************************
+ * Создаем секцию gallery
+****************************************/
+
+//Функция для клика по лайку
+function clickToLike(event, itemId, cardToLike) {
+  if (cardToLike.isLiked) {
+    myApi.likeCard(itemId, 'DELETE')
+      .then(res => {
+        cardToLike.toggleLike(event);
+        cardToLike.isLiked = false;
+        console.log(`Снимаем лайк c карточки id=${itemId}`);
+      })
+      .catch(err => console.log(err));
+  } else {
+    myApi.likeCard(itemId, 'PUT')
+      .then(res => {
+        cardToLike.toggleLike(event);
+        cardToLike.isLiked = true;
+        console.log(`Лайк на карточку с id=${itemId}`);
+      })
+      .catch(err => console.log(err));
+  }
+}
+
+//Функция для создания полностью готовой разметки карточки
+function createCard(cardData) {
+
+  const newCard = new Card(cardData, '.card-template', {
+
+    handleCardClick: () => {
+      popupFullScreen.open(cardData)
+      popupFullScreen.setEventListeners()
+      console.log(newCard.getId())
+
     },
 
+    handleDelete: (evtClickCard) => {
+      popupDelCard.open(); //открыть попап для подтверждения
+      popupDelCard.setEventListeners();
+      popupDelCard.getDelFormSubmit().addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        popupDelCard.handleEventSubmit(evt);
+        myApi.delCard(newCard.getId())
+          .then(res => {
+            newCard.removeCard(evtClickCard) // удаление из DOM
+            popupDelCard.close();
+            console.log(res.message);
+          })
+          .catch(err => console.log(err));
+      })
+    },
+
+    handleLike: (evtClickCard) => {
+      clickToLike(evtClickCard, cardData._id, newCard)
+    }
+  }, idAuthorizedUser)
+
+  return newCard.createCard()
+}
+
+/* создаем попап для полноэкранных картинок */
+const popupFullScreen = new PopupWithImage('.popup_full-screen');
+
+/* создаем попап для подтверждения удаления картинок */
+const popupDelCard = new PopupDeleteImage('.popup_delete-card');
+
+/* создаем объект cardsList который будет рендерить карточки в галерею */
+const cardsList = new Section({
+  renderer: (item) => cardsList.addItem(createCard(item))
+}, '.gallery__photo-grid');
+
+
+/* запрос на сервер для загрузки и отрисовки карточек */
+myApi.loadCards()
+  .then(cardsDataArr => {
+    cardsList.renderItems(cardsDataArr)
+    console.log(`Карточки с сервера удачно загружены. Количество карточек ${cardsDataArr.length}`)
+  }).catch(err => `Ошибка при загрузки массива карточек с сервера, ${err}`)
+
+
+/* создаем попап объект popupAddGallery (создание новой карточки) */
+const popupAddGallery = new PopupWithForm('.popup-add-gallery',
+  {
+    handleFormSubmit: (inputs) => {
+      // когда форма отправлена, выполнить запрос "addNewCard" на сервер
+      myApi.addNewCard(inputs)
+        .then(cardData => {
+          const addCard = createCard(cardData) // создаем разметку карточки функцией createCard
+          cardsList.addItem(addCard, 'up') //вставить в DOM (в начало галерии)
+          popupAddGallery.close(); // закрыть попап 
+          console.log(`Картачка с id${cardData._id} успешно добавлена`)
+        })
+        .catch(err => console.log('Ошибка при добавлении новой карточки на сервер', err))
+    },
     handleFormValidator: (openForm) => {
       formAddProfileValid.enableValidation();
     }
   });
 
-// клик по кнопке buttonEditProfile запускает метод open() объекта popupEditProfile
-buttonEditProfile.addEventListener('click', () => {
-  popupEditProfile.open();
-});
-
 // клик по кнопке buttonAddGallery запускает метод open() объекта popupAddGallery
 buttonAddGallery.addEventListener('click', () => {
   popupAddGallery.open();
+  popupAddGallery.setEventListeners()
 });

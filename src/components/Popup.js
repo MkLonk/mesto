@@ -19,11 +19,13 @@ export default class Popup {
 
   open() {
     this._popup.classList.add('popup_opened');
-    this.setEventListeners();
+    /* this.setEventListeners(); */
+    document.addEventListener('keyup', this._handleEscClose);
   }
 
   close() {
     this._popup.classList.remove('popup_opened');
+
     document.removeEventListener('keyup', this._handleEscClose);
   }
 
@@ -40,7 +42,7 @@ export default class Popup {
     this._buttonClose.addEventListener('click', this.close);
     this._popup.addEventListener('click', this._handleClickMiss);
 
-    document.addEventListener('keyup', this._handleEscClose);
+    /* document.addEventListener('keyup', this._handleEscClose); */
   }
 
 }
