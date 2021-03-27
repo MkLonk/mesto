@@ -9,23 +9,37 @@
 
 export default class Card {
 
+<<<<<<< HEAD
   constructor(data, selectorTemplate, { handleCardClick, handleDelete, handleLike }, idAuthorizedUser) {
 
     // разбираем объект data
+=======
+  constructor(data, selectorTemplate, { handleCardClick, handleDelete, handleLike }) {
+>>>>>>> 4f4cff7c03ee885614a606be7dce06dac4dbe427
     this._dataLinkImage = data.link;
     this._dataTitleImage = data.name;
     this._dataLikeCounter = data.likes.length; //длина массива лайков
     this._dataIdAutur = data.owner._id; //id автора карточки
+<<<<<<< HEAD
     this._dataLikes = data.likes // массив лайков
 
     this._idAuthorizedUser = idAuthorizedUser // id авторизованного пользователя
     this._cardId = data._id // id новой карточки
     this.isLiked = false // есть ли лайк у карточки 
+=======
+    this._cardId = ''//id новой карточки
+    this._dataLikes = data.likes // массив лайков
+>>>>>>> 4f4cff7c03ee885614a606be7dce06dac4dbe427
 
     // входящие функции
     this._handleCardClick = handleCardClick.bind(this);
     this._handleDelete = handleDelete.bind(this)
     this._handleLike = handleLike.bind(this)
+<<<<<<< HEAD
+=======
+
+    this._handleLikeClick = this._handleLikeClick.bind(this)
+>>>>>>> 4f4cff7c03ee885614a606be7dce06dac4dbe427
 
     this._galleryElement = document.querySelector(selectorTemplate).content.cloneNode(true);
     this._popupFullScreen = document.querySelector('.popup_full-screen');

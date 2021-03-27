@@ -23,13 +23,6 @@ export default class PopupDeleteImage extends Popup {
     console.log('Нажали ДА')
   }
 
-/*   setEventListeners() {
-    console.log('Сработал setEventListeners попапа')
-    this._form.addEventListener('submit', this.handleEventSubmit)
-    return super.setEventListeners();
-
-  } */
-
   open() {
     console.log('Открыт попап удаления')
     this._buttonConfirm.textContent = 'Да';
