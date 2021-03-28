@@ -76,6 +76,7 @@ const popupEditAvatar = new PopupWithForm('.popup-edit-avatar', {
 
   handleFormValidator: () => { }
 });
+popupEditAvatar.setEventListeners()
 
 /* создаем объект (попап) popupEditProfile для редактирования информации о пользователе */
 const popupEditProfile = new PopupWithForm('.popup-edit-profile',
@@ -104,17 +105,16 @@ const popupEditProfile = new PopupWithForm('.popup-edit-profile',
     }
   }
 );
+popupEditProfile.setEventListeners()
 
 /* слушатель кнопки buttonEditAvatar - для редактирования Аватара*/
 buttonEditAvatar.addEventListener('click', () => {
   popupEditAvatar.open();
-  popupEditAvatar.setEventListeners();
 });
 
 /* слушатель кнопки buttonEditProfile - для редактирования информации о пользователе */
 buttonEditProfile.addEventListener('click', () => {
   popupEditProfile.open();
-  popupEditProfile.setEventListeners();
 });
 
 
@@ -150,20 +150,17 @@ function createCard(cardData) {
 
     handleCardClick: () => {
       popupFullScreen.open(cardData)
-      popupFullScreen.setEventListeners()
-      console.log(newCard.getId())
-
     },
 
     handleDelete: (evtClickCard) => {
       popupDelCard.open(); //открыть попап для подтверждения
-      popupDelCard.setEventListeners();
-      popupDelCard.getDelFormSubmit().addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        popupDelCard.handleEventSubmit(evt);
+      const delForm = popupDelCard.getDelFormSubmit()
+
+      delForm.addEventListener('submit', (evt) => {
+        popupDelCard.handleEventSubmit(evt)
         myApi.delCard(newCard.getId())
           .then(res => {
-            newCard.removeCard(evtClickCard) // удаление из DOM
+            newCard.removeCard(evtClickCard); // удаление из DOM
             popupDelCard.close();
             console.log(res.message);
           })
@@ -181,9 +178,11 @@ function createCard(cardData) {
 
 /* создаем попап для полноэкранных картинок */
 const popupFullScreen = new PopupWithImage('.popup_full-screen');
+popupFullScreen.setEventListeners()
 
 /* создаем попап для подтверждения удаления картинок */
 const popupDelCard = new PopupDeleteImage('.popup_delete-card');
+popupDelCard.setEventListeners()
 
 /* создаем объект cardsList который будет рендерить карточки в галерею */
 const cardsList = new Section({
@@ -195,7 +194,7 @@ const cardsList = new Section({
 myApi.loadCards()
   .then(cardsDataArr => {
     cardsList.renderItems(cardsDataArr)
-    console.log(`Карточки с сервера удачно загружены. Количество карточек ${cardsDataArr.length}`)
+    console.log(`Все карточки удачно загружены с сервера. Количество карточек ${cardsDataArr.length}`)
   }).catch(err => `Ошибка при загрузки массива карточек с сервера, ${err}`)
 
 
@@ -217,9 +216,11 @@ const popupAddGallery = new PopupWithForm('.popup-add-gallery',
       formAddProfileValid.enableValidation();
     }
   });
+// включаем слушатели попапа
+popupAddGallery.setEventListeners()
 
 // клик по кнопке buttonAddGallery запускает метод open() объекта popupAddGallery
 buttonAddGallery.addEventListener('click', () => {
   popupAddGallery.open();
-  popupAddGallery.setEventListeners()
+
 });

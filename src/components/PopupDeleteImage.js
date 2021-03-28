@@ -9,13 +9,16 @@ export default class PopupDeleteImage extends Popup {
     this._buttonConfirm = this._form.querySelector('.form__button-save')
 
     this.handleEventSubmit = this.handleEventSubmit.bind(this)
-
   }
 
   getDelFormSubmit() {
     return this._form
   }
 
+/*   setEventListeners() {
+    //this._form.addEventListener('submit', this._handleFormSubmit)
+    return super.setEventListeners();
+  } */
 
   handleEventSubmit(evt) {
     evt.preventDefault();
@@ -25,6 +28,7 @@ export default class PopupDeleteImage extends Popup {
 
   open() {
     console.log('Открыт попап удаления')
+    
     this._buttonConfirm.textContent = 'Да';
 
     return super.open()
