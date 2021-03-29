@@ -15,11 +15,6 @@ export default class PopupDeleteImage extends Popup {
     this._evtCardDel
   }
 
-  // слушатель субмита, запускает колбэк функцию deleteCard
-  /*   formDelSubmit() {
-      this._form.addEventListener('submit', this.deleteCard)
-    } */
-
   // метод меняет статусы кнопок (Удаление...) при нажатии
   handleEventSubmit(evt) {
     evt.preventDefault();
@@ -35,7 +30,7 @@ export default class PopupDeleteImage extends Popup {
     return super.open()
   }
 
-  // закрывает попап и отчищаем this._openedCardObj
+  // закрывает попап и отчищает переменные cardDel и evtCardDel
   close() {
     this._cardDel = '';
     this._evtCardDel = '';

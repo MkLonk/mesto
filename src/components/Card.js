@@ -37,6 +37,8 @@ export default class Card {
     this._cellLikeCounter = this._galleryElement.querySelector('.card__like-counter');
     this._cellDeleteIcon = this._galleryElement.querySelector('.card__delete');
 
+    //this._cellCardId = this._galleryElement.querySelector('#id')
+
   };
 
 
@@ -101,6 +103,8 @@ export default class Card {
         return;
       }
     })
+
+    //this._cellCardId.id = this.getId();
 
     this._setEventListeners();
 
