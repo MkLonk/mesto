@@ -37,6 +37,8 @@ export default class Card {
     this._cellLikeCounter = this._galleryElement.querySelector('.card__like-counter');
     this._cellDeleteIcon = this._galleryElement.querySelector('.card__delete');
 
+    this._cellCardId = this._galleryElement.querySelector('#id')
+
   };
 
 
@@ -71,8 +73,8 @@ export default class Card {
   }
 
   // метод для удаления карточки из галерии
-  removeCard(evt) {
-    evt.target.closest('.gallery__element').remove();
+  removeCard(delCardId) {
+    document.getElementById(delCardId).remove();
   }
 
   // метод возвращает id карточки
@@ -102,8 +104,11 @@ export default class Card {
       }
     })
 
+    this._cellCardId.id = this.getId();
+
     this._setEventListeners();
 
     return this._galleryElement; // возвращаем полностью готовую карточку
   };
+
 };

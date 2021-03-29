@@ -19,7 +19,6 @@ export default class Popup {
 
   open() {
     this._popup.classList.add('popup_opened');
-    /* this.setEventListeners(); */
     document.addEventListener('keyup', this._handleEscClose);
   }
 
@@ -41,8 +40,6 @@ export default class Popup {
   setEventListeners() {
     this._buttonClose.addEventListener('click', this.close);
     this._popup.addEventListener('click', this._handleClickMiss);
-
-    /* document.addEventListener('keyup', this._handleEscClose); */
   }
 
 }

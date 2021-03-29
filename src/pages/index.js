@@ -152,20 +152,9 @@ function createCard(cardData) {
       popupFullScreen.open(cardData)
     },
 
-    handleDelete: (evtClickCard) => {
-      popupDelCard.open(); //открыть попап для подтверждения
-      const delForm = popupDelCard.getDelFormSubmit()
-
-      delForm.addEventListener('submit', (evt) => {
-        popupDelCard.handleEventSubmit(evt)
-        myApi.delCard(newCard.getId())
-          .then(res => {
-            newCard.removeCard(evtClickCard); // удаление из DOM
-            popupDelCard.close();
-            console.log(res.message);
-          })
-          .catch(err => console.log(err));
-      })
+    handleDelete: () => {
+      popupDelCard.open(newCard);
+      popupDelCard.formDelSubmit()
     },
 
     handleLike: (evtClickCard) => {
@@ -181,7 +170,22 @@ const popupFullScreen = new PopupWithImage('.popup_full-screen');
 popupFullScreen.setEventListeners()
 
 /* создаем попап для подтверждения удаления картинок */
-const popupDelCard = new PopupDeleteImage('.popup_delete-card');
+const popupDelCard = new PopupDeleteImage('.popup_delete-card',
+  {
+    deleteCard: (evt) => {
+      popupDelCard.handleEventSubmit(evt)
+      const cardElement = popupDelCard.getCardDelObj()
+      const cardId = cardElement.getId()
+
+      myApi.delCard(cardId)
+        .then(res => {
+          cardElement.removeCard(cardId); // удаление из DOM
+          popupDelCard.close();
+          console.log(res.message);
+        })
+        .catch(err => console.log(err));
+    }
+  });
 popupDelCard.setEventListeners()
 
 /* создаем объект cardsList который будет рендерить карточки в галерею */
