@@ -11,7 +11,8 @@ export default class PopupDeleteImage extends Popup {
     this.handleEventSubmit = this.handleEventSubmit.bind(this)
 
     this.deleteCard = deleteCard
-    this._openedCardObj
+    this._cardDel
+    this._evtCardDel
   }
 
   // слушатель субмита, запускает колбэк функцию deleteCard
@@ -23,27 +24,30 @@ export default class PopupDeleteImage extends Popup {
   handleEventSubmit(evt) {
     evt.preventDefault();
     this._buttonConfirm.textContent = 'Удаление...'
-    console.log('Нажали ДА')
   }
 
-  // метод открывает попап и присваевает переменной this._openedCardObj переданный объект cardObj 
-  open(cardObj) {
-    console.log('Открыт попап удаления')
-
+  // при открытии присваеваем переменные cardDel и evtCardDel
+  open(evtCardDel ,cardDel) {
     this._buttonConfirm.textContent = 'Да';
-    this._openedCardObj = cardObj;
+    this._cardDel = cardDel;
+    this._evtCardDel = evtCardDel;
 
     return super.open()
   }
 
 // закрывает попап и отчищаем this._openedCardObj
   close() {
-    this._openedCardObj = '';
+    this._cardDel = '';
+    this._evtCardDel = '';
     return super.close()
   }
 
   // возвращаем объект this._openedCardObj (карта каторую хотим удалить)
-  getCardDelObj() {
-    return this._openedCardObj;
+  getCardDel() {
+    return this._cardDel;
+  }
+
+  getEvtCardDel() {
+    return this._evtCardDel;
   }
 }
