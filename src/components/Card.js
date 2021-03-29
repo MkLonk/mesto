@@ -71,8 +71,8 @@ export default class Card {
   }
 
   // метод для удаления карточки из галерии
-  removeCard(evt) {
-    evt.target.closest('.gallery__element').remove();
+  removeCard(evtDelCard) {
+    evtDelCard.target.closest('.gallery__element').remove();
   }
 
   // метод возвращает id карточки
@@ -106,4 +106,5 @@ export default class Card {
 
     return this._galleryElement; // возвращаем полностью готовую карточку
   };
+
 };

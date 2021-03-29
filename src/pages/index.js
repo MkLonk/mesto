@@ -123,21 +123,22 @@ buttonEditProfile.addEventListener('click', () => {
 ****************************************/
 
 //Функция для клика по лайку
-function clickToLike(event, itemId, cardToLike) {
+function clickToLike(event, cardToLike) {
+  const cardId = cardToLike.getId()
   if (cardToLike.isLiked) {
-    myApi.likeCard(itemId, 'DELETE')
+    myApi.likeCard(cardId, 'DELETE')
       .then(res => {
         cardToLike.toggleLike(event);
         cardToLike.isLiked = false;
-        console.log(`Снимаем лайк c карточки id=${itemId}`);
+        console.log(`Снимаем лайк c карточки id=${cardId}`);
       })
       .catch(err => console.log(err));
   } else {
-    myApi.likeCard(itemId, 'PUT')
+    myApi.likeCard(cardId, 'PUT')
       .then(res => {
         cardToLike.toggleLike(event);
         cardToLike.isLiked = true;
-        console.log(`Лайк на карточку с id=${itemId}`);
+        console.log(`Лайк на карточку с id=${cardId}`);
       })
       .catch(err => console.log(err));
   }
@@ -152,24 +153,12 @@ function createCard(cardData) {
       popupFullScreen.open(cardData)
     },
 
-    handleDelete: (evtClickCard) => {
-      popupDelCard.open(); //открыть попап для подтверждения
-      const delForm = popupDelCard.getDelFormSubmit()
-
-      delForm.addEventListener('submit', (evt) => {
-        popupDelCard.handleEventSubmit(evt)
-        myApi.delCard(newCard.getId())
-          .then(res => {
-            newCard.removeCard(evtClickCard); // удаление из DOM
-            popupDelCard.close();
-            console.log(res.message);
-          })
-          .catch(err => console.log(err));
-      })
+    handleDelete: (evtCardDel) => {
+      popupDelCard.open(evtCardDel, newCard);
     },
 
     handleLike: (evtClickCard) => {
-      clickToLike(evtClickCard, cardData._id, newCard)
+      clickToLike(evtClickCard, newCard)
     }
   }, idAuthorizedUser)
 
@@ -180,8 +169,23 @@ function createCard(cardData) {
 const popupFullScreen = new PopupWithImage('.popup_full-screen');
 popupFullScreen.setEventListeners()
 
-/* создаем попап для подтверждения удаления картинок */
-const popupDelCard = new PopupDeleteImage('.popup_delete-card');
+/* создаем попап popupDelCard - подтверждения удаления карточек */
+const popupDelCard = new PopupDeleteImage('.popup_delete-card',
+  {
+    deleteCard: (evt) => {
+      popupDelCard.handleEventSubmit(evt)
+      const card = popupDelCard.getCardDel() // объект карточка которую надо удалить
+      const cardEvt = popupDelCard.getEvtCardDel() // эвент той карточки где нажали иконку "удалить"
+
+      myApi.delCard(card.getId())
+        .then(res => {
+          card.removeCard(cardEvt); // удаление из DOM
+          popupDelCard.close();
+          console.log(res.message);
+        })
+        .catch(err => console.log(err));
+    }
+  });
 popupDelCard.setEventListeners()
 
 /* создаем объект cardsList который будет рендерить карточки в галерею */
@@ -208,11 +212,11 @@ const popupAddGallery = new PopupWithForm('.popup-add-gallery',
           const addCard = createCard(cardData) // создаем разметку карточки функцией createCard
           cardsList.addItem(addCard, 'up') //вставить в DOM (в начало галерии)
           popupAddGallery.close(); // закрыть попап 
-          console.log(`Картачка с id${cardData._id} успешно добавлена`)
+          console.log(`Картачка с id=${cardData._id} успешно добавлена`)
         })
         .catch(err => console.log('Ошибка при добавлении новой карточки на сервер', err))
     },
-    handleFormValidator: (openForm) => {
+    handleFormValidator: () => {
       formAddProfileValid.enableValidation();
     }
   });
@@ -222,5 +226,4 @@ popupAddGallery.setEventListeners()
 // клик по кнопке buttonAddGallery запускает метод open() объекта popupAddGallery
 buttonAddGallery.addEventListener('click', () => {
   popupAddGallery.open();
-
 });

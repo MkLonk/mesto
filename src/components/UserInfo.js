@@ -8,9 +8,6 @@ export default class UserInfo {
     this._userName = document.querySelector(selectorUserName);
     this._userJob = document.querySelector(selectorUserJob);
     this._userAvatar = document.querySelector(selectorUserAvatar);
-
-    /* this._api = api */
-    //this.idAuthorizedUser = ''
   }
 
   // метод возвращает объект с данными пользователя
